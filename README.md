@@ -119,4 +119,4 @@ Then `cd ..` and then run `pipx install .`
 
 ## License
 
-`kowalski` is distributed under the terms of the [GNU general public license](https://www.gnu.org/licenses/gpl-3.0.html).
+`kowalski-core` is distributed under the terms of the [GNU general public license](https://www.gnu.org/licenses/gpl-3.0.html).
