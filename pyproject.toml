@@ -4,6 +4,10 @@ version = "0.1.0"
 description = ""
 authors = ["Matteo Ferrini <mimmi.ferrini@gmail.com>"]
 readme = "README.md"
+include = [
+    "kowalski_core/templates",
+    "kowalski_core/config.py"
+]
 
 [tool.poetry.scripts]
 kowalski-core = "kowalski_core.main:app"
@@ -13,7 +17,6 @@ python = "^3.10"
 typer = "^0.12.5"
 trafilatura = "^1.12.2"
 youtube-transcript-api = "^0.6.2"
-pyyaml = "^6.0.2"
 groq = "^0.11.0"
 
 [tool.poetry.group.dev.dependencies]
