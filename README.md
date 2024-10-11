@@ -15,11 +15,13 @@ kowalski-core can capture strings, urls and youtube transcriptions, create `*.md
 
 ## Table of Contents
 
-- [Screenshots](#screenshots)
-- [Features](#features)
-- [Rationale](#rationale)
-- [Installing](#installing)
-- [Running](#running)
+- [kowalski-core](#kowalski-core)
+  - [Table of Contents](#table-of-contents)
+  - [Screenshots](#screenshots)
+  - [Usage](#usage)
+  - [Rationale](#rationale)
+  - [Setup](#setup)
+  - [License](#license)
 
 ## Screenshots
 
@@ -47,7 +49,7 @@ Partly inspired by what Daniel Miessler did with [Fabric](https://github.com/dan
 
 ## Setup
 
-Clone the repo, `cd` into `kowalski_core`, create a `kowalski.conf` file under the `kowalski_core` subfolder. The content of `kowalski.conf` should be:
+Clone the repo, `cd` into `kowalski_core`, create a `config.py` file under the `kowalski_core` subfolder. The content of `kowalski.conf` should be:
 ```
 [GENERAL]
 NOTES_PATH=<YOUR_NOTES_PATH_HERE>
@@ -71,7 +73,7 @@ TEMPLATES_PATH=kowalski_core/templates
 GROQ_API_KEY=https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3D
 MODEL_NAME=llama3-8b-8192
 ```
-Then run `pipx install .`
+Then `cd ..` and then run `pipx install .`
 
 ## License
 

@@ -1,23 +1,18 @@
 import re
 import uuid
 import os
-import configparser
 
-from kowalski_core.features.intent   import Intent
-from kowalski_core.features.youtube  import get_yt_content
-from kowalski_core.features.url      import get_url_content
+from kowalski_core.config           import NOTES_PATH
+from kowalski_core.features.intent  import Intent
+from kowalski_core.features.youtube import get_yt_content
+from kowalski_core.features.url     import get_url_content
 
 from datetime import datetime
 from typing import Tuple
+from importlib.resources import open_text
 
-config = configparser.ConfigParser()
-config.read('kowalski_core/kowalski.conf')
-
-NOTES_PATH     = config['GENERAL']['NOTES_PATH']
-TEMPLATES_PATH = config['GENERAL']['TEMPLATES_PATH']
-URL_REGEX      = r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
-YT_REGEX       = r"(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/.+"
-
+URL_REGEX = r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
+YT_REGEX  = r"(https?://)?(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)/.+"
 
 class Note():
 
@@ -57,7 +52,7 @@ class Note():
             'intent_output': self.get_intent_path(),
             'content': self.content
         }
-        note_template = open(os.path.join(TEMPLATES_PATH, 'note.md'))
+        note_template = open_text('kowalski_core.templates', 'note.md')
         return note_template.read().format(**metadata)
     
     def write_note(self) -> None:

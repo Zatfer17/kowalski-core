@@ -1,18 +1,10 @@
-import os
 import sys
-import configparser
 
-
+from kowalski_core.config            import GROQ_API_KEY, MODEL_NAME
 from kowalski_core.features.markdown import get_metadata, get_content
 
 from groq import Groq
-
-config = configparser.ConfigParser()
-config.read('kowalski_core/kowalski.conf')
-
-TEMPLATES_PATH = config['GENERAL']['TEMPLATES_PATH']
-GROQ_API_KEY = config['MODEL']['GROQ_API_KEY']
-MODEL_NAME = config['MODEL']['MODEL_NAME']
+from importlib.resources import open_text
 
 class Analysis():
 
@@ -26,7 +18,7 @@ class Analysis():
         self.client = Groq(api_key=GROQ_API_KEY)
 
     def get_prompt(self) -> str:
-        prompt = open(os.path.join(TEMPLATES_PATH, f'{self.intent}.md'))
+        prompt = open_text('kowalski_core.templates', f'{self.intent}.md')
         return prompt.read()
 
     def run(self) -> None:
