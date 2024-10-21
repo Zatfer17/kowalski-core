@@ -20,8 +20,7 @@ def collect(
         source = sys.stdin.read().strip()
 
     note = Note(source=source)
-    note.write_note()
-    print(note.path)
+    print(note.write_note(mode='collect'))
 
 @app.command()
 def transform(
@@ -34,4 +33,7 @@ def transform(
 
     note = Note(source=source, is_path=True)
     analysis = Analysis(note=note)
-    analysis.run(intent=intent)
+    content = analysis.run(intent=intent)
+
+    note = Note(source=content)
+    print(note.write_note(mode='transform'))

@@ -35,5 +35,5 @@ class Analysis():
                     api_base = API_BASE
                 )
             content = response.choices[0].message.content
-            sys.stdout.write(content)
-            f.write(content)
+            #sys.stdout.write(content)
+            return content

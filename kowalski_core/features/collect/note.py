@@ -16,11 +16,10 @@ class Note():
 
     def __init__(self, source: str, is_path: bool=False) -> None:
         if not is_path:
-            self.id             = self.get_id()
-            self.media, self.source, self.content        = self.get_media_source_and_content(source)
-            self.created_at     = self.get_created_at()
-            self.path           = self.get_path()
-            self.transform_path = self.get_transform_path()
+            self.id                               = self.get_id()
+            self.media, self.source, self.content = self.get_media_source_and_content(source)
+            self.created_at                       = self.get_created_at()
+            self.transform_path                   = self.get_transform_path()
         else:
             metadata, content = parse_note(source)
             self.id             = metadata['id']
@@ -51,26 +50,27 @@ class Note():
     def get_created_at(self):
         return datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     
-    def get_path(self) -> str:
+    def get_path(self, mode: str) -> str:
         note_name = f'{self.media}_{self.created_at}.md'
-        return os.path.join(NOTES_PATH, 'collect', note_name)
+        return os.path.join(NOTES_PATH, mode, note_name)
     
     def get_transform_path(self) -> str:
         note_name = f'{self.media}_{self.created_at}.md'
         return os.path.join(NOTES_PATH, 'transform', note_name)
     
-    def write_note(self) -> None:
+    def write_note(self, mode: str) -> None:
         note_config = {
             'id'            : self.id,
             'media'         : self.media,
             'source'        : self.source,
             'created_at'    : self.created_at,
-            'path'          : self.path,
             'transform_path': self.transform_path,
             'content'       : self.content
         }
         note_template = open_text('kowalski_core.features.collect.templates', 'note.md')
-        with open(self.path, 'w', encoding="utf-8") as f:
+        path = self.get_path(mode)
+        with open(path, 'w', encoding="utf-8") as f:
             f.write(note_template.read().format(**note_config))
+            return path
 
     
