@@ -67,7 +67,7 @@ class Note():
             'transform_path': self.transform_path,
             'content'       : self.content
         }
-        note_template = open_text('kowalski_core.features.collect.templates', 'note.md')
+        note_template = open_text('kowalski_core.features.collect.templates', 'NOTE.md')
         path = self.get_path(mode)
         with open(path, 'w', encoding="utf-8") as f:
             f.write(note_template.read().format(**note_config))

@@ -24,16 +24,24 @@ class Analysis():
                 {'role': 'user'  , 'content': self.note.content}
             ]
             if API_BASE is None:
-                response = completion(
-                    model    = MODEL_NAME,
-                    messages = messages
-                )
-            else:
-                response = completion(
+                stream = completion(
                     model    = MODEL_NAME,
                     messages = messages,
-                    api_base = API_BASE
+                    stream   = True
                 )
-            content = response.choices[0].message.content
-            #sys.stdout.write(content)
+            else:
+                stream = completion(
+                    model    = MODEL_NAME,
+                    messages = messages,
+                    api_base = API_BASE,
+                    stream   = True
+                )
+            content = ''
+            for chunk in stream:
+                piece = chunk['choices'][0]['delta'].content
+                if piece:
+                    print(piece, end="", flush=True)
+                    content += piece
+                else:
+                    break
             return content
