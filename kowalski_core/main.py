@@ -1,9 +1,10 @@
 import typer
 import sys
 
-from kowalski_core.features.intent import Intent
-from kowalski_core.features.note   import Note
-from kowalski_core.features.analysis     import Analysis
+from kowalski_core.features.collect.note       import Note
+from kowalski_core.features.transform.intent   import Intent
+from kowalski_core.features.transform.analysis import Analysis
+
 from typing_extensions import Annotated
 
 
@@ -12,24 +13,27 @@ app = typer.Typer()
 
 @app.command()
 def collect(
-    source: Annotated[str, typer.Argument(help="The piece of information you want to collect (note, url, youtube link)")] = "",
-    intent: Annotated[Intent, typer.Option(help="What Kowalski should do with that piece of information")] = Intent.SUMMARIZE
+    source: Annotated[str, typer.Argument(help="The piece of information you want to collect (note, url, youtube link)")] = ""
 ) -> None:
 
     if not sys.stdin.isatty():
         source = sys.stdin.read().strip()
 
-    note = Note(source, intent)
-    note.write_note()
-    print(note.get_note_path())
+    note = Note(source=source)
+    print(note.write_note(mode='collect'))
 
 @app.command()
 def transform(
-    source: Annotated[str, typer.Argument(help="The note you want to transform (path)")] = ""
+    source: Annotated[str, typer.Argument(help="The note you want to transform (path)")] = "",
+    intent: Annotated[Intent, typer.Option(help="What Kowalski should do with that piece of information")] = Intent.SUMMARIZE
 ) -> None:
     
     if not sys.stdin.isatty():
         source = sys.stdin.read().strip()
 
-    analysis = Analysis(source=source)
-    analysis.run()
+    note = Note(source=source, is_path=True)
+    analysis = Analysis(note=note)
+    content = analysis.run(intent=intent)
+
+    note = Note(source=content)
+    print(note.write_note(mode='transform'))

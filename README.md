@@ -9,7 +9,7 @@
 
 kowalski-core is a simple cli for note taking, built with [Typer](https://github.com/fastapi/typer).
 
-kowalski-core can capture strings, urls and youtube transcriptions, create `*.md` notes and easily process them with your LLM of choice via [Groq](https://groq.com/)
+kowalski-core can capture strings, urls and youtube transcriptions, create `*.md` notes and easily process them locally with your LLM of choice via [Ollama](https://github.com/ollama/ollama)
 
 -----
 
@@ -17,7 +17,6 @@ kowalski-core can capture strings, urls and youtube transcriptions, create `*.md
 
 - [kowalski-core](#kowalski-core)
   - [Table of Contents](#table-of-contents)
-  - [Screenshots](#screenshots)
   - [Usage](#usage)
     - [Collect](#collect)
     - [Transform](#transform)
@@ -26,61 +25,63 @@ kowalski-core can capture strings, urls and youtube transcriptions, create `*.md
   - [Setup](#setup)
   - [License](#license)
 
-## Screenshots
-
-<table>
-<tr><td><img src="assets/1.png"></td><td><img src="assets/2.png"></td></tr>
-<tr><td><img src="assets/3.png"></td><td><img src="assets/4.png"></td></tr>
-</table>
-
 ## Usage
 
-![](assets/commands.png)
-
-Two commands are available:
-- collect
-- transform
+```                                                  
+ Usage: kowalski-core [OPTIONS] COMMAND [ARGS]...                                                                   
+                                                                                                                    
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --install-completion          Install completion for the current shell.                                          │
+│ --show-completion             Show completion for the current shell, to copy it or customize the installation.   │
+│ --help                        Show this message and exit.                                                        │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Commands ───────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ collect                                                                                                          │
+│ transform                                                                                                        │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+```
 
 ### Collect
 
-![](assets/collect.png)
-
-This is how you collect basic notes. Source can be:
-- a string, if you want to jot down a quick idea
-- a youtube link, if you want to get its transcription
-- a generic url, if you want to get its content
-
-Kowalski will create a markdown note whose content depends on the source above.
-
-When calling the collect command you can specify an *intent*. At the moment 5 intents are available:
-- SUMMARIZE
-- POLISH
-- ORGANIZE
-- ELABORATE
-- BRAINSTORM
-
-The chosen intent will determine how Kowalski will process the note when invoking the transform command.
+```
+ Usage: kowalski-core collect [OPTIONS] [SOURCE]                                                                    
+                                                                                                                    
+╭─ Arguments ──────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│   source      [SOURCE]  The piece of information you want to collect (note, url, youtube link)                   │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --help          Show this message and exit.                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+```
 
 ### Transform
 
-![](assets/transform.png)
-
-This is how you process notes coming from the collect command. Source is always the path of the note you want to transform. Kowalski will process that note according to the intent defined in the previous step.
+```
+ Usage: kowalski-core transform [OPTIONS] [SOURCE]                                                                  
+                                                                                                                    
+╭─ Arguments ──────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│   source      [SOURCE]  The note you want to transform (path)                                                    │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --intent        [POLISH|SUMMARIZE|ORGANIZE|ELABORATE|BRAINSTOR  What Kowalski should do with that piece of       │
+│                 M]                                              information                                      │
+│                                                                 [default: SUMMARIZE]                             │
+│ --help                                                          Show this message and exit.                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+```
 
 ### Bonus
 
 The two commands can be piped, ie you can do:
 ```
-kowalski collect [OPTIONS] [SOURCE] | kowalski transform
+kowalski collect [SOURCE] | kowalski transform
 ```
 
-In this way the transformation will be applied straight to the note collected. You can also pipe in the output from pbpaste for maximum efficiency:
+In this way the transformation will be applied straight to the note collected. You can also pipe in the output from pbpaste:
 ```
-pbpaste | kowalski collect [OPTIONS] [SOURCE] | kowalski transform
+pbpaste | kowalski collect | kowalski transform
 ```
 And define a shortcut in your terminal for ease
-
-
 
 ## Rationale
 
@@ -98,24 +99,47 @@ Partly inspired by what Daniel Miessler did with [Fabric](https://github.com/dan
 
 ## Setup
 
-Clone the repo, `cd` into `kowalski_core`, create a `config.py` file under the `kowalski_core` subfolder. The content of `config.py` should be:
-```
-NOTES_PATH=<YOUR_NOTES_PATH_HERE>
-GROQ_API_KEY=<YOUR_API_KEY_HERE>
-MODEL_NAME=<YOUR_MODEL_NAME_HERE>
-```
-where:
-- `NOTES_PATH` can be any path, but make sure to have two subfolders in there, one called `collect` and one called `transform`.
-- `GROQ_API_KEY` is the api key from the Groq dashboard.
-- `MODEL_NAME` is the Model ID of your model of choice from [here](https://console.groq.com/docs/models).
+1. **Clone this repo**
 
-A sample config would be:
-```
-NOTES_PATH='/Users/maf/Documents/notes'
-GROQ_API_KEY=<MY_API_KEY_HERE>
-MODEL_NAME='llama3-8b-8192'
-```
-Then `cd ..` and then run `pipx install .`
+    ```
+    git clone https://github.com/Zatfer17/kowalski-core.git
+    cd kowalski-core
+    ```
+
+2. **Create a config**
+
+    ```
+    touch kowalski_core/config.py
+    nano kowalski_core/config.py
+    ```
+
+    Your config must include:
+    ```
+    NOTES_PATH=<FILL_ME>
+    MODEL_NAME=<FILL_ME>
+    API_BASE=<FILL_ME>
+    ```
+    where:
+    - `NOTES_PATH` can be any path, but make sure to have two subfolders in there, one called `collect` and one called `transform`.
+    - `MODEL_NAME` is the name of your ollama model of choice.
+    - `API_BASE` is the ollama base api, typically `http://localhost:11434`
+
+    A sample config would be:
+    ```
+    NOTES_PATH = '/home/matteo/Documents/Github/notes'
+    MODEL_NAME = 'ollama/llama3.2:1b'
+    API_BASE   = 'http://localhost:11434'
+    ```
+
+3. **Start ollama**
+    ```
+    ollama serve
+    ```
+
+4. **Install kowalski-core**
+    ```
+    pipx install .
+    ```
 
 ## License
 
