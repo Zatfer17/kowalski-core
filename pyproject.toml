@@ -1,27 +1,15 @@
-[tool.poetry]
+[project]
 name = "kowalski-core"
-version = "0.1.0"
-description = ""
-authors = ["Matteo Ferrini <mimmi.ferrini@gmail.com>"]
+version = "0.2.0"
+description = "kowalski-core is a simple think-it-later app for your CLI"
 readme = "README.md"
-include = [
-    "kowalski_core/templates",
-    "kowalski_core/config.py"
+requires-python = ">=3.11"
+dependencies = [
+    "chromadb>=0.6.0",
+    "trafilatura>=2.0.0",
+    "typer>=0.15.1",
+    "youtube-transcript-api>=0.6.3",
 ]
 
-[tool.poetry.scripts]
-kowalski-core = "kowalski_core.main:app"
-
-[tool.poetry.dependencies]
-python = "^3.10"
-typer = "^0.12.5"
-trafilatura = "^1.12.2"
-youtube-transcript-api = "^0.6.2"
-litellm = "^1.50.0"
-
-[tool.poetry.group.dev.dependencies]
-ipykernel = "^6.29.5"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[project.scripts]
+kv = "kowalski_core.main:app"

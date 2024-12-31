@@ -1,39 +1,36 @@
 import typer
-import sys
-
-from kowalski_core.features.collect.note       import Note
-from kowalski_core.features.transform.intent   import Intent
-from kowalski_core.features.transform.analysis import Analysis
+import os
+import time
 
 from typing_extensions import Annotated
+from kowalski_core.features.utils.utils import run
 
+
+HOME = os.getenv('HOME')
+NOTES_PATH = os.path.join(HOME, '.kowalski')
+EDITOR = os.getenv('EDITOR')
 
 app = typer.Typer()
 
-
 @app.command()
-def collect(
-    source: Annotated[str, typer.Argument(help="The piece of information you want to collect (note, url, youtube link)")] = ""
+def add(
+    book: Annotated[str, typer.Argument(help="The book you want to add the note to")],
+    note: Annotated[str, typer.Argument(help="The note/url/youtube link you want to add")] = None
 ) -> None:
 
-    if not sys.stdin.isatty():
-        source = sys.stdin.read().strip()
+    book_path = os.path.join(NOTES_PATH, book)
+    run(f'mkdir -p {book_path}')
 
-    note = Note(source=source)
-    print(note.write_note(mode='collect'))
-
-@app.command()
-def transform(
-    source: Annotated[str, typer.Argument(help="The note you want to transform (path)")] = "",
-    intent: Annotated[Intent, typer.Option(help="What Kowalski should do with that piece of information")] = Intent.SUMMARIZE
-) -> None:
+    note_name = f'{int(time.time())}.md'
+    note_path = os.path.join(book_path, note_name)
     
-    if not sys.stdin.isatty():
-        source = sys.stdin.read().strip()
+    if note is None:
+        run(f'touch {note_path}')
+        run(f'{EDITOR} {note_path}')
+    else:
+        run(f'echo {note} > {note_path}')
 
-    note = Note(source=source, is_path=True)
-    analysis = Analysis(note=note)
-    content = analysis.run(intent=intent)
 
-    note = Note(source=content)
-    print(note.write_note(mode='transform'))
+@app.command()
+def transform() -> None:
+    return
