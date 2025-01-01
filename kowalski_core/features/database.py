@@ -86,4 +86,10 @@ class Database():
             cursor = conn.cursor()
             cursor.execute(f"SELECT * FROM notes WHERE id = '{id}'")
             return cursor.fetchone()
+        
+    def get_recent_notes(self, hours: int):
+        with sqlite3.connect(self.db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute(f"SELECT * FROM notes WHERE datetime(date) >= datetime('now', 'localtime', '-{hours} hours')")
+            return cursor.fetchall()
             

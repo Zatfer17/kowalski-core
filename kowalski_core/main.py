@@ -101,3 +101,10 @@ def edit(
 
     date = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
     db.update_note(note.id, date, content)
+
+@app.command()
+def digest(
+    hours: Annotated[str, typer.Argument()] = 24
+):
+
+    [print(NotePreview(x[0], x[1], x[2], x[3], x[4], x[5])) for x in db.get_recent_notes(hours)]

@@ -25,6 +25,6 @@ class Magician():
                 content += piece
             else:
                 break
-        media = 'note'
-        source = 'magic'
+        media = 'ai'
+        source = note.id
         return media, source, content
