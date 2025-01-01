@@ -1,36 +1,48 @@
 import typer
-import os
-import time
 
 from typing_extensions import Annotated
-from kowalski_core.features.utils.utils import run
+from kowalski_core.features.database import Database
+from kowalski_core.features.parser import Parser
 
-
-HOME = os.getenv('HOME')
-NOTES_PATH = os.path.join(HOME, '.kowalski')
-EDITOR = os.getenv('EDITOR')
 
 app = typer.Typer()
+db = Database()
+parser = Parser()
 
 @app.command()
 def add(
-    book: Annotated[str, typer.Argument(help="The book you want to add the note to")],
-    note: Annotated[str, typer.Argument(help="The note/url/youtube link you want to add")] = None
+    book: Annotated[str, typer.Argument()],
+    note: Annotated[str, typer.Argument()]
 ) -> None:
 
-    book_path = os.path.join(NOTES_PATH, book)
-    run(f'mkdir -p {book_path}')
-
-    note_name = f'{int(time.time())}.md'
-    note_path = os.path.join(book_path, note_name)
-    
-    if note is None:
-        run(f'touch {note_path}')
-        run(f'{EDITOR} {note_path}')
-    else:
-        run(f'echo {note} > {note_path}')
-
+    media, source, content = parser.get_type_source_content(note)
+    db.insert_note(book, media, source, content)
 
 @app.command()
-def transform() -> None:
-    return
+def list(
+    book: Annotated[str, typer.Argument()] = None,
+    limit: Annotated[int, typer.Argument()] = 10
+) -> None:
+
+    if book is None:
+        print(*db.list_books(), sep='\n')
+    else:
+        print(*db.list_notes(book, limit), sep='\n')
+
+@app.command()
+def find(
+    keywords: Annotated[str, typer.Argument()],
+    book: Annotated[str, typer.Argument()] = None,
+) -> None:
+
+    if len(keywords.split(' ')) > 1:
+        print(*db.query_notes(keywords, book, exact=False), sep='\n')
+    else:
+        print(*db.query_notes(keywords, book, exact=True), sep='\n')
+
+@app.command()
+def view(
+    id: Annotated[str, typer.Argument()],
+) -> None:
+    
+    print(*db.get_note(id), sep='\n')
