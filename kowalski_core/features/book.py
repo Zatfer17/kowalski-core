@@ -1,5 +1,4 @@
-from kowalski_core.features.ui import in_yellow
-
+from kowalski_core.features.ui import *
 
 class Book():
 

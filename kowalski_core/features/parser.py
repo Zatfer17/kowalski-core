@@ -37,5 +37,5 @@ class Parser():
         else:
             media   = 'note'
             content = source
-            source  = ''
+            source  = None
         return media, source, content
