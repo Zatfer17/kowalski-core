@@ -8,10 +8,11 @@ class Database():
         self.db_parent_path = os.path.join(db_base_path, db_folder)
         self.db_path = os.path.join(db_base_path, db_folder, db_name)
         if not os.path.exists(self.db_path):
+            print('Initializing db...')
             self._initialize()
 
     def _initialize(self):
-        os.makedirs(self.db_parent_path)
+        os.makedirs(self.db_parent_path, exist_ok=True)
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute("""

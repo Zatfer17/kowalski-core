@@ -5,10 +5,10 @@ from kowalski_core.features.note import Note
 
 class Downloader():
 
-    def __init__(self, path: str = '.kowalski/export'):
-        self.path = path
-        if not os.path.exists(path):
-            os.makedirs(path)
+    def __init__(self, base_path: str = os.getenv('HOME'), path: str = '.kowalski/export'):
+        self.path = os.path.join(base_path, path)
+        if not os.path.exists(self.path):
+            os.makedirs(self.path, exist_ok=True)
 
     def download(self, note: Note):
         note_dir = os.path.join(self.path, note.book)
