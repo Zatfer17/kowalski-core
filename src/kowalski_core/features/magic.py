@@ -9,7 +9,7 @@ class Magician():
 
     def trick(self, note: Note, intent: str):
         messages = [
-            {'role': 'system', 'content': 'You are an AI assistant specialized in summarizing content'},
+            {'role': 'system', 'content': intent},
             {'role': 'user'  , 'content': note.content}
         ]
         stream = chat(
