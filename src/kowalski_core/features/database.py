@@ -7,7 +7,7 @@ class Database():
     def __init__(self, db_base_path: str = os.getenv('HOME'), db_folder: str = '.kowalski', db_name: str = 'notes.db'):
         self.db_parent_path = os.path.join(db_base_path, db_folder)
         self.db_path = os.path.join(db_base_path, db_folder, db_name)
-        if not os.path.exists(self.db_parent_path):
+        if not os.path.exists(self.db_path):
             self._initialize()
 
     def _initialize(self):
