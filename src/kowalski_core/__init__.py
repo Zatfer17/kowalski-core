@@ -4,11 +4,11 @@ import warnings
 from typing_extensions import Annotated
 from datetime import datetime
 
-from kowalski_core.features.editor import Editor
 from kowalski_core.features.database import Database
+from kowalski_core.features.editor import Editor
 from kowalski_core.features.parser import Parser
 from kowalski_core.features.book import Book
-from kowalski_core.features.note import Note, NotePreview
+from kowalski_core.features.note import NotePreview, Note
 from kowalski_core.features.download import Downloader
 from kowalski_core.features.magic import Magician
 
@@ -16,26 +16,25 @@ from kowalski_core.features.magic import Magician
 warnings.filterwarnings('ignore')
 
 app = typer.Typer()
-editor = Editor()
 db = Database()
-parser = Parser()
-downloader = Downloader()
-magician = Magician()
 
 @app.command()
 def add(
     book: Annotated[str, typer.Argument()],
     note: Annotated[str, typer.Argument()] = None
 ) -> None:
-
+    
     if note is None:
+        editor = Editor()
         editor.create_file()
         media, source, content = editor.open()
         editor.delete_file()
     else:
+        parser = Parser()
         media, source, content = parser.get_type_source_content(note)
     date = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
     db.insert_note(book, date, media, source, content)
+
 
 @app.command()
 def list(
@@ -53,14 +52,14 @@ def find(
     keywords: Annotated[str, typer.Argument()],
     book: Annotated[str, typer.Argument()] = None,
 ) -> None:
-
+    
     [print(NotePreview(x[0], x[1], x[2], x[3], x[4], x[5])) for x in db.find_note(keywords, book)]
 
 @app.command()
-def view(
+def show(
     id: Annotated[str, typer.Argument()],
 ) -> None:
-    
+        
     note_raw = db.view_note(id)
     note = Note(note_raw[0], note_raw[1], note_raw[2], note_raw[3], note_raw[4], note_raw[5])
     print(note)
@@ -69,20 +68,22 @@ def view(
 @app.command()
 def download(
     id: Annotated[str, typer.Argument()],
-) -> None:
+) -> None:    
     
     note_raw = db.view_note(id)
     note = Note(note_raw[0], note_raw[1], note_raw[2], note_raw[3], note_raw[4], note_raw[5])
+    downloader = Downloader()
     downloader.download(note)
 
 @app.command()
 def magic(
     id: Annotated[str, typer.Argument()],
     spell: Annotated[str, typer.Argument()] = None
-):
-    
+):    
+
     note_raw = db.view_note(id)
     note = Note(note_raw[0], note_raw[1], note_raw[2], note_raw[3], note_raw[4], note_raw[5])
+    magician = Magician()
     media, source, content = magician.trick(note, spell)
     date = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
     db.insert_note(note.book, date, media, source, content)
@@ -91,9 +92,11 @@ def magic(
 def edit(
     id: Annotated[str, typer.Argument()]
 ):
+
     note_raw = db.view_note(id)
     note = Note(note_raw[0], note_raw[1], note_raw[2], note_raw[3], note_raw[4], note_raw[5])
 
+    editor = Editor()
     editor.create_file()
     editor.load_file(note.content)
     _, _, content = editor.open()

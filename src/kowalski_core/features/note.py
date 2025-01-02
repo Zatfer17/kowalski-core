@@ -26,7 +26,7 @@ source: {self.source}
 class NotePreview(Note):
 
     def __str__(self):
-        text = self.content if len(self.content) < 50 else f'{self.content[:50]}[...]'
+        text = self.content if len(self.content) < 50 else f'{self.content[:50].replace('\n', ' ')}[...]'
         return f'• [{in_yellow(self.book)}:{in_yellow(self.id)}] [{in_green(self.date)}] [{in_green(self.media.ljust(4))}] {text}'
     
 

@@ -10,7 +10,7 @@ requires-python = ">=3.10"
 dependencies = [
     "ollama>=0.4.5",
     "trafilatura>=2.0.0",
-    "typer>=0.15.1",
+    "typer-slim>=0.15.1",
     "youtube-transcript-api>=0.6.3",
 ]
 
