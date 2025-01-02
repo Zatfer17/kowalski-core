@@ -3,13 +3,20 @@ name = "kowalski-core"
 version = "0.2.0"
 description = "kowalski-core is a simple think-it-later app for your CLI"
 readme = "README.md"
-requires-python = ">=3.11"
+authors = [
+    { name = "Matteo Ferrini", email = "mimmi.ferrini@gmail.com" }
+]
+requires-python = ">=3.10"
 dependencies = [
-    "typer>=0.15.1",
-    "trafilatura>=2.0.0",
-    "youtube-transcript-api>=0.6.3",
     "ollama>=0.4.5",
+    "trafilatura>=2.0.0",
+    "typer>=0.15.1",
+    "youtube-transcript-api>=0.6.3",
 ]
 
 [project.scripts]
-kv = "kowalski_core.main:app"
+kv = "kowalski_core:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
