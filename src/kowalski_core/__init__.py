@@ -29,9 +29,9 @@ def add(
 ) -> None:
 
     if note is None:
-        editor.create_temp_file()
+        editor.create_file()
         media, source, content = editor.open()
-        editor.delete_temp_file()
+        editor.delete_file()
     else:
         media, source, content = parser.get_type_source_content(note)
     date = datetime.today().strftime('%Y-%m-%d %H:%M:%S')
