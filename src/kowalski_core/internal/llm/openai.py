@@ -1,5 +1,3 @@
-import click
-
 from .client import Client
 from openai  import OpenAI as OpenAiClient
 
