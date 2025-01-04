@@ -21,7 +21,7 @@ class Note():
             updated_at = datetime.strptime(updated_at, "%Y-%m-%d %H:%M:%S.%f")
 
         self.id         = hashlib.sha1(f"{book}.{content}".encode()).hexdigest()
-        self.slug       = f"{updated_at.strftime("%y%m%d")}:{self.id[:4]}"
+        self.slug       = f"{updated_at.strftime('%y%m%d')}:{self.id[:4]}"
         self.book       = book
         self.updated_at = updated_at
         self.media      = media
@@ -32,5 +32,5 @@ class Note():
         return "{} {} -> {}".format(
             click.style(f"[{self.slug}]", fg="yellow", bold=True),
             click.style(f"[{self.media.ljust(4)}]", fg="green", bold=False),
-            f"{self.content[:50].replace("\n", " ")}[...]"
+            "{}[...]".format(self.content[:50].replace('\n', ' '))
         )
