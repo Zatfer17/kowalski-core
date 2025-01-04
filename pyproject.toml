@@ -8,15 +8,14 @@ authors = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-    "lazy-import>=0.2.2",
-    "ollama>=0.4.5",
+    "click>=8.1.8",
+    "openai>=1.59.3",
     "trafilatura>=2.0.0",
-    "typer-slim>=0.15.1",
     "youtube-transcript-api>=0.6.3",
 ]
 
 [project.scripts]
-kv = "kowalski_core:app"
+kv = "kowalski_core.main:cli"
 
 [build-system]
 requires = ["hatchling"]
