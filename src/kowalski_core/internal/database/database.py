@@ -9,7 +9,7 @@ class Database():
     NAME = "notes.db"
 
     def __init__(self):
-        self.path = os.path.join(os.getenv("KOWALSKI_DIR"), self.NAME)
+        self.path = os.path.join(os.getenv("KOWALSKI_DIR", ".kowalski"), self.NAME)
     
     def delete(self):
         try:
@@ -18,7 +18,7 @@ class Database():
             pass
 
     def initialize(self):
-        os.makedirs(os.getenv("KOWALSKI_DIR"), exist_ok=True)
+        os.makedirs(os.getenv("KOWALSKI_DIR", ".kowalski"), exist_ok=True)
         with sqlite3.connect(self.path) as conn:
             cursor = conn.cursor()
             cursor.execute("""
