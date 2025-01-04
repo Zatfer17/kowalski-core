@@ -1,9 +1,8 @@
 import click
 
 from datetime                        import datetime
+from kowalski_core.internal.parse    import get_url_content, get_yt_content
 from kowalski_core.internal.note     import Note
-from kowalski_core.internal.url      import get_url_content
-from kowalski_core.internal.youtube  import get_yt_content
 from kowalski_core.internal.database import Database
 
 

@@ -1,7 +1,7 @@
 import click
 
-from kowalski_core.internal.database import Database
 from datetime                        import datetime
+from kowalski_core.internal.database import Database
 from kowalski_core.internal.note     import Note
 
 

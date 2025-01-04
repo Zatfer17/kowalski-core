@@ -1,8 +1,8 @@
 import click
 
-from kowalski_core.internal.database import Database
-from kowalski_core.internal.llm      import OpenAIClient
 from datetime                        import datetime
+from kowalski_core.internal.database import Database
+from kowalski_core.internal.llm      import OpenAI
 from kowalski_core.internal.note     import Note
 
 
@@ -16,7 +16,7 @@ def kaboom(slug: str, prompt: str, model: str):
     db = Database()
     _, book, content = db.get_note(slug)
 
-    client = OpenAIClient()
+    client = OpenAI()
 
     updated_at = datetime.today()
     media   = "ai"
@@ -28,4 +28,4 @@ def kaboom(slug: str, prompt: str, model: str):
     db = Database()
     db.insert(note)
 
-    click.echo(content)
+    click.echo(note)
