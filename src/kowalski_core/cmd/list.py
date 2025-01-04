@@ -17,3 +17,5 @@ def list(book: str):
         results = [Book(x[0], x[1]) for x in db.list_books()]
 
     [click.echo(x) for x in results]
+
+    return results
