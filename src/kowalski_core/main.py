@@ -15,19 +15,15 @@ def cli():
     subparsers.add_parser("list", help="List all notes")
     
     edit_parser = subparsers.add_parser("edit", help="Edit a note")
-    edit_parser.add_argument("note_id", type=int, help="The ID of the note to edit")
+    edit_parser.add_argument("note", type=int, help="The note to edit")
     
     open_parser = subparsers.add_parser("show", help="Show a note")
-    open_parser.add_argument("note_id", type=int, help="The ID of the note to show")
+    open_parser.add_argument("note", type=int, help="The note to show")
     
     search_parser = subparsers.add_parser("search", help="Search notes by keywords")
     search_parser.add_argument("keywords", help="The keywords to search for")
 
     args = parser.parse_args()
-    print("--------------------------")
-    print(f"Command  : {args.command}")
-    print(f"Arguments: {vars(args)}")
-    print("--------------------------")
 
     match args.command:
         case "add":
@@ -35,6 +31,6 @@ def cli():
         case "list":
             listCmd()
         case "edit":
-            editCmd(args.note_id)
+            editCmd(args.note)
         case "show":
-            showCmd(args.note_id)
+            showCmd(args.note)

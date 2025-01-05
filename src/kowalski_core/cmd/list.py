@@ -7,18 +7,12 @@ from kowalski_core.internal.note   import Note
 
 
 def listCmd():
-
     notes_paths = glob(path.join(KOWALSKI_PATH, "*.md"))
-
     notes = []
-
     for p in notes_paths:
-
         note_md = load(p)
-
-        note = Note(id, note_md['created'], note_md['updated'], note_md.content)
-        notes.append(note.id)
-
-        print(note.description('short'))
-
+        note_name = p.split("/")[-1].replace(".md", "")
+        note = Note(note_name, note_md["created"], note_md["updated"], note_md.content)
+        notes.append(note)
+        print(note.description("short"))
     return notes
