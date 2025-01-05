@@ -1,26 +1,21 @@
-import click
+from kowalski_core.internal.config import KOWALSKI_PATH, EDITOR
+from kowalski_core.internal.run    import execute
+from os                            import path
+from frontmatter                   import load
+from kowalski_core.internal.note   import Note
 
-from datetime                        import datetime
-from kowalski_core.internal.database import Database
-from kowalski_core.internal.note     import Note
 
+def editCmd(note_id: str):
 
-@click.command(help="Edit a note")
-@click.argument("slug", required=True)
-def edit(slug: str):
+    note_path = path.join(KOWALSKI_PATH, f"{note_id}.md")
+    execute(f"{EDITOR} {note_path}")
 
-    db = Database()
-    old_id, book, old_content = db.get_note(slug)
+    note_md = load(note_path)
+    note = Note(note_md['id'], note_md['created'], note_md['modified'], note_md.content)
+    note.refresh_modified()
 
-    updated_at = datetime.today()
-    media   = "note"
-    source  = None
-    content = click.edit(old_content)
+    note.write(note_path)
 
-    note = Note(book, updated_at, media, source, content)
+    print(note.description('short'))
 
-    db = Database()
-    db.insert(note)
-    db.remove(old_id)
-
-    click.echo(note)
+    return note

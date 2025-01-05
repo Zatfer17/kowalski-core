@@ -1,21 +1,20 @@
-import click
+from glob                          import glob
+from os                            import path
+from kowalski_core.internal.config import KOWALSKI_PATH
+from frontmatter                   import load
+from kowalski_core.internal.note   import Note
 
-from kowalski_core.internal.database import Database
-from kowalski_core.internal.book     import Book
-from kowalski_core.internal.note     import Note
 
+def listCmd():
 
-@click.command(help="List books or notes")
-@click.option("-b", "--book", required=False, help="The book to list notes from")
-def list(book: str):
-    
-    db = Database()
+    notes_paths = glob(path.join(KOWALSKI_PATH, "*.md"))
 
-    if book:
-        results = [Note(x[0], x[1], x[2], x[3], x[4]) for x in db.list_notes(book)]
-    else:
-        results = [Book(x[0], x[1]) for x in db.list_books()]
+    notes = []
+    for p in notes_paths:
+        note_md = load(p)
+        note = Note(note_md['id'], note_md['created'], note_md['modified'], note_md.content)
+        notes.append(note.id)
 
-    [click.echo(x) for x in results]
+        print(note.description('short'))
 
-    return results
+    return notes
