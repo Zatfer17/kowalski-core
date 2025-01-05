@@ -3,6 +3,7 @@ from kowalski_core.internal.run    import execute
 from os                            import path
 from frontmatter                   import load
 from kowalski_core.internal.note   import Note
+from kowalski_core.internal.git    import commit
 
 
 def editCmd(note_name: str):
@@ -12,5 +13,6 @@ def editCmd(note_name: str):
     note = Note(note_name, note_md["created"], note_md["updated"], note_md.content)
     note.refresh_updated()
     note.write(note_path)
+    commit("Updated", note_name)
     print(note.description("short"))
     return note

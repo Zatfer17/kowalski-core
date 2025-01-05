@@ -6,8 +6,10 @@ from datetime                      import datetime
 from kowalski_core.internal.note   import Note
 
 
-def listCmd():
+def listCmd(limit: int):
     notes_paths = glob(path.join(KOWALSKI_PATH, "*.md"))
+    notes_paths = sorted(notes_paths, reverse=True)
+    notes_paths = notes_paths[:limit]
     notes = []
     for p in notes_paths:
         note_md = load(p)
