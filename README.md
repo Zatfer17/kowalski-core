@@ -64,6 +64,7 @@ ssh -T git@github.com
 ## Roadmap
 - [ ] Implement Save with URL or Youtube link
 - [ ] Implement Kaboom, with ID or question. RAG capability could be implemented relying on tags for document similarity
+- [ ] Make website
 - [ ] (Implement Init with gitPython to clone .kowalski repo)
 - [ ] (Implement Show with regular expression or keyword to search)
 - [ ] Use GitHub actions to run URL/YouTube parsing from mobile
