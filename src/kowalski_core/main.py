@@ -7,10 +7,49 @@ from kowalski_core.cmd.show import showCmd
 from kowalski_core.cmd.kaboom import kaboomCmd
 from kowalski_core.cmd.sync import syncCmd
 
+WELCOME_IMAGE = """
+                           %%%                   
+                         =:-%#%#                 
+                        .....--..                
+                        ...:==-=:                
+                       .....-+-..%               
+                       =.........*               
+                       +.........#               
+                      #*.........#%              
+                      #=.........-%              
+                      %...........+#             
+                     %=...........:%             
+                     #:............=             
+                     %.............-#            
+                     %.............:%            
+                     %............::%            
+                     %...........::-@%           
+                     @.........:::-=@@           
+                      .......:::---=             
+                       :::::::---==              
+                        :-----==++               
+                      +=+*#  *##**              
+                      *+*#+#  +*+=+*       
+"""
+
+WELCOME_TEXT = """
+██╗  ██╗ ██████╗ ██╗    ██╗ █████╗ ██╗     ███████╗██╗  ██╗██╗
+██║ ██╔╝██╔═══██╗██║    ██║██╔══██╗██║     ██╔════╝██║ ██╔╝██║
+█████╔╝ ██║   ██║██║ █╗ ██║███████║██║     ███████╗█████╔╝ ██║
+██╔═██╗ ██║   ██║██║███╗██║██╔══██║██║     ╚════██║██╔═██╗ ██║
+██║  ██╗╚██████╔╝╚███╔███╔╝██║  ██║███████╗███████║██║  ██╗██║
+╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝                                         
+"""
+
+
+def kowalscii():
+    print(WELCOME_IMAGE)
+    print(WELCOME_TEXT)
+
 
 def cli():
     parser = ArgumentParser(prog="kv", description="")
-    subparsers = parser.add_subparsers(dest="command", required=True)
+    subparsers = parser.add_subparsers(dest="command", required=False)
     
     add_parser = subparsers.add_parser("add", help="Add a new note")
     add_parser.add_argument("content", type=str, nargs="?", default=None, help="The note to add (optional)")
@@ -34,19 +73,22 @@ def cli():
     sync_parser = subparsers.add_parser("sync", help="Sync notes")
 
     args = parser.parse_args()
-
-    match args.command:
-        case "add":
-            addCmd(args.content)
-        case "save":
-            saveCmd(args.link)
-        case "list":
-            listCmd(args.limit)
-        case "edit":
-            editCmd(args.note)
-        case "show":
-            showCmd(args.note)
-        case "kaboom":
-            kaboomCmd(args.note, args.prompt)
-        case "sync":
-            syncCmd()
+    
+    if args.command is None:
+        kowalscii()
+    else:
+        match args.command:
+            case "add":
+                addCmd(args.content)
+            case "save":
+                saveCmd(args.link)
+            case "list":
+                listCmd(args.limit)
+            case "edit":
+                editCmd(args.note)
+            case "show":
+                showCmd(args.note)
+            case "kaboom":
+                kaboomCmd(args.note, args.prompt)
+            case "sync":
+                syncCmd()
