@@ -62,13 +62,16 @@ ssh -T git@github.com
   - `Storage & File Formats > Note Metadata Settings > Modified Field` = `updated`
 
 ## Roadmap
-- [ ] Implement Add with URL or Youtube link
+- [ ] Implement Save with URL or Youtube link
 - [ ] Implement Kaboom, with ID or question. RAG capability could be implemented relying on tags for document similarity
 - [ ] (Implement Init with gitPython to clone .kowalski repo)
 - [ ] (Implement Show with regular expression or keyword to search)
 - [ ] Use GitHub actions to run URL/YouTube parsing from mobile
 - [ ] Use GitHub actions to run kaboom from mobile or defer from cli
 - [ ] Implement script for Obsidian migration
+
+## Issues
+- Notes created on gitJournal can't be deleted from CLI, as they are restored on first gitJournal push
 
 ## License
 
