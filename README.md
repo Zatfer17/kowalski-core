@@ -18,9 +18,9 @@
 - [x] Filename should be timestamp
 - [x] Files should all be in a single folder
 - [x] No subfolders
+- [x] Git based
 - [ ] Just tags
 - [ ] All commands must return also JSON print like nmcli
-- [ ] Git based
 - [ ] Use § as prefix for identifiers in interlinking
 
 ## Setup
