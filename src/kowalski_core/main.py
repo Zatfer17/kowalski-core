@@ -29,7 +29,7 @@ def cli():
 
     kaboom_parser = subparsers.add_parser("kaboom", help="Kaboom a note")
     kaboom_parser.add_argument("note", type=str, help="The note to kaboom")
-    kaboom_parser.add_argument("prompt", type=str, nargs="Please summarize this note", default=50, help="The prompt to kaboom with")
+    kaboom_parser.add_argument("prompt", type=str, nargs="?", default="Please summarize this note", help="The prompt to kaboom with")
     
     sync_parser = subparsers.add_parser("sync", help="Sync notes")
 
