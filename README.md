@@ -4,7 +4,10 @@
 
 # kowalski-core
 
-`kowalski-core`  is a simple think-it-later app for your CLI.
+`kowalski-core` it's an AI powered CLI for knowledge management. You can use it as:
+- a note-taking tool
+- a read-it-later app
+- a bookmarks system
 
 ## Principles
 
@@ -34,10 +37,12 @@
   - run URL/YouTube parsing from mobile
   - run kaboom from mobile or defer from cli
 - Implement:
-  - Add with URL or Youtube link
-  - Show with regular expression to search
-  - Sync, to run as part of every command, triggers every half an hour or so
-  - Kaboom, with ID or question. RAG capability could be implemented relying on tags for document similarity
+  - Commands:
+    - Add with URL or Youtube link
+    - Show with regular expression to search
+    - Sync, to run as part of every command, triggers every half an hour or so
+    - Kaboom, with ID or question. RAG capability could be implemented relying on tags for document similarity
+  - Script for Obsidian migration
 
 ## License
 
