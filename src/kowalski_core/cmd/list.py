@@ -16,7 +16,7 @@ def listCmd():
 
         note_md = load(p)
 
-        note = Note(id, note_md['created'], note_md['modified'], note_md.content)
+        note = Note(id, note_md['created'], note_md['updated'], note_md.content)
         notes.append(note.id)
 
         print(note.description('short'))

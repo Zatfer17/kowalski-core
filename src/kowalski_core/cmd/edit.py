@@ -11,8 +11,8 @@ def editCmd(note_id: str):
     execute(f"{EDITOR} {note_path}")
 
     note_md = load(note_path)
-    note = Note(note_md['id'], note_md['created'], note_md['modified'], note_md.content)
-    note.refresh_modified()
+    note = Note(note_md['id'], note_md['created'], note_md['updated'], note_md.content)
+    note.refresh_updated()
 
     note.write(note_path)
 

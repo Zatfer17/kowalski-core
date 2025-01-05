@@ -5,25 +5,25 @@ from json     import dumps
 TEMPLATE = """---
 id: {}
 created: {}
-modified: {}
+updated: {}
 ---
 
 {}"""
 
 class Note():
 
-    def __init__(self, id: str, created: datetime, modified: datetime, content: str):
-        self.id       = id
-        self.created  = created
-        self.modified = modified
-        self.content  = content
+    def __init__(self, id: str, created: datetime, updated: datetime, content: str):
+        self.id      = id
+        self.created = created
+        self.updated = updated
+        self.content = content
 
-    def refresh_modified(self):
-        self.modified = datetime.now()
+    def refresh_updated(self):
+        self.updated = datetime.now()
 
     def write(self, path: str):
         f = open(path, 'w')
-        f.write(TEMPLATE.format(self.id, self.created, self.modified, self.content))
+        f.write(TEMPLATE.format(self.id, self.created, self.updated, self.content))
 
     def description(self, mode: str):
         match mode:
@@ -33,6 +33,6 @@ class Note():
                 content = content.replace("\n", " ")
                 return f"[{self.id}] {content}"
             case 'long':
-                return TEMPLATE.format(self.id, self.created, self.modified, self.content)
+                return TEMPLATE.format(self.id, self.created, self.updated, self.content)
             case 'json':
                 return dumps(self.__dict__, indent=4, default=str)
