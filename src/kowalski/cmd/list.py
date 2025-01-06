@@ -1,9 +1,8 @@
-from glob                          import glob
-from os                            import path
-from kowalski_core.internal.config import KOWALSKI_PATH
-from frontmatter                   import load
-from datetime                      import datetime
-from kowalski_core.internal.note   import Note
+from glob                     import glob
+from os                       import path
+from kowalski.internal.config import KOWALSKI_PATH
+from frontmatter              import load
+from kowalski.internal.note   import Note
 
 
 def listCmd(limit: int):

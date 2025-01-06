@@ -1,8 +1,7 @@
-from kowalski_core.internal.config import KOWALSKI_PATH
-from os                            import path
-from frontmatter                   import load
-from kowalski_core.internal.note   import Note
-
+from kowalski.internal.config import KOWALSKI_PATH
+from os                       import path
+from frontmatter              import load
+from kowalski.internal.note   import Note
 
 
 def showCmd(note_name: str):
