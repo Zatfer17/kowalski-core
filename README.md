@@ -1,11 +1,13 @@
 ![OS support](https://img.shields.io/badge/OS-macOS%20Linux%20Windows-red)
 ![License](https://img.shields.io/badge/License-GPL%20v3-blue.svg)
 
-![kowalski](assets/pictures/kowalski.png)
+<p align="center">
+  <img src="assets/pictures/kowalski.png"  width="150" align="center"/>
+</p>
 
 # kowalski
 
-`kowalski` it's an AI powered knowledge management system for the CLI. You can use it as a note-taking tool, a read-it-later app or a bookmarks system, using your AI model of choice (Ollama, OpenAI, Anthropic, ...).
+`kowalski` is an AI powered knowledge management system for the CLI. You can use it as a note-taking tool, a read-it-later app or a bookmarks system, using your AI model of choice (Ollama, OpenAI, Anthropic, ...).
 
 ![kowalski-demo](assets/pictures/demo.gif)
 
