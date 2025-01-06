@@ -2,7 +2,7 @@
 ![License](https://img.shields.io/badge/License-GPL%20v3-blue.svg)
 
 <p align="center">
-  <img src="assets/pictures/kowalski.png"  width="150" align="center"/>
+  <img src="assets/pictures/kowalski.png"  width="100" align="center"/>
 </p>
 
 # kowalski
