@@ -1,23 +1,28 @@
 [project]
-name = "kowalski-core"
+name = "kowalski"
 version = "0.2.0"
-description = "kowalski-core is a simple think-it-later app for your CLI"
+description = "kowalski is a simple think-it-later app for your CLI"
 readme = "README.md"
 authors = [
     { name = "Matteo Ferrini", email = "mimmi.ferrini@gmail.com" }
 ]
 requires-python = ">=3.10"
 dependencies = [
-    "lazy-import>=0.2.2",
-    "ollama>=0.4.5",
+    "gitpython>=3.1.44",
+    "litellm>=1.57.0",
+    "python-frontmatter>=1.1.0",
     "trafilatura>=2.0.0",
-    "typer-slim>=0.15.1",
     "youtube-transcript-api>=0.6.3",
 ]
 
 [project.scripts]
-kv = "kowalski_core:app"
+kv = "kowalski.main:cli"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "tuna>=0.5.11",
+]
