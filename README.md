@@ -1,5 +1,5 @@
-![OS support](https://img.shields.io/badge/OS-macOS%20Linux%20Windows-red)
-![License](https://img.shields.io/badge/License-GPL%20v3-blue.svg)
+![OS support](https://img.shields.io/badge/OS-macOS%20Linux%20Windows-green)
+![License](https://img.shields.io/badge/License-GPL%20v3-blue)
 
 <p align="center">
   <img src="assets/pictures/kowalski.png"  width="100" align="center"/>
@@ -13,11 +13,68 @@
 
 ## Tutorial
 
-TODO
+Create a note with `add`:
+```
+kv add "Kowalski, analysis"
+```
+Omitting the content of the note will open the default editor (`$EDITOR` environment variable).
 
-## Rationale
+---
 
-TODO
+Parse a link with `save`:
+```
+kv save https://www.youtube.com/watch?v=omcF-OYS_1U
+```
+Passing:
+- a Youtube link will result in the video being transcribed
+- a normal URL will result in the content of the website (if static) being retrieved
+
+---
+
+List notes with `list`:
+```
+kv list
+```
+
+---
+
+Edit a note with `edit`:
+```
+kv edit 20250106164651
+```
+
+---
+
+Show a note with `show`:
+```
+kv show 20250106164651
+```
+
+---
+
+Transform a note with `kaboom`:
+```
+kv kaboom 20250106164651
+```
+By default `kowalski` will summarize the note. You can pass a `--prompt` argument to customize the prompt:
+```
+kv kaboom 20250106164651 --prompt "Please rewrite this with pirate language"
+```
+
+---
+
+Remove a note with `remove`:
+```
+kv remove 20250106164651
+```
+
+---
+
+Sync the notes with your Github repo with `sync`:
+```
+kv sync
+```
+`kowalski` will commit your changes, pull from the remote and push.
 
 ## Guiding principles
 - Taking notes should be fast
@@ -28,8 +85,6 @@ TODO
 - Tags are used for categorisation
 
 ## Install
-
-TODO
 
 ### Create the Kowalski folder
 

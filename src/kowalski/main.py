@@ -46,10 +46,10 @@ def cli():
     subparsers = parser.add_subparsers(dest="command", required=False)
     
     add_parser = subparsers.add_parser("add", help="Add a new note")
-    add_parser.add_argument("note", type=str, nargs="?", default=None, help="The note to add (optional)")
+    add_parser.add_argument("note", type=str, nargs="?", default=None, help="The note to add (optional). Omitting this argument will open the default editor")
 
     save_parser = subparsers.add_parser("save", help="Save a link")
-    save_parser.add_argument("link", type=str, help="The link to save")
+    save_parser.add_argument("link", type=str, help="The link to save. Youtube videos will be transcribed, normal URLs will be retrieved")
 
     list_parser = subparsers.add_parser("list", help="List all notes")
     list_parser.add_argument("--limit", type=int, nargs="?", default=50, help="The number of notes to display (optional)")
@@ -60,14 +60,14 @@ def cli():
     open_parser = subparsers.add_parser("show", help="Show a note")
     open_parser.add_argument("note", type=str, help="The note to show")
 
-    kaboom_parser = subparsers.add_parser("kaboom", help="Kaboom a note")
-    kaboom_parser.add_argument("note", type=str, help="The note to kaboom")
-    kaboom_parser.add_argument("--prompt", type=str, nargs="?", default="Please summarize this note", help="The prompt to kaboom with")
+    kaboom_parser = subparsers.add_parser("kaboom", help="Transform a note with AI")
+    kaboom_parser.add_argument("note", type=str, help="The note to transform with AI")
+    kaboom_parser.add_argument("--prompt", type=str, nargs="?", default="Please summarize this note", help="The prompt to trasnform the note with")
 
     remove_parser = subparsers.add_parser("remove", help="Remove a note")
     remove_parser.add_argument("note", type=str, help="The note to remove")
     
-    sync_parser = subparsers.add_parser("sync", help="Sync notes")
+    sync_parser = subparsers.add_parser("sync", help="Sync notes with remote")
 
     args = parser.parse_args()
     
