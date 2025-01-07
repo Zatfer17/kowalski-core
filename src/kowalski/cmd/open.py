@@ -1,5 +1,5 @@
 from kowalski.internal.config import KOWALSKI_PATH, EDITOR, KOWALSKI_FOLDER, GITHUB_USER, GITHUB_BRANCH, GITHUB_LOG_FILE
-from kowalski.internal.run    import execute
+from subprocess               import run
 from os                       import path
 from frontmatter              import load
 from kowalski.internal.note   import Note
@@ -8,7 +8,7 @@ from kowalski.internal.git    import Git
 
 def openCmd(note_name: str):
     note_path = path.join(KOWALSKI_PATH, f"{note_name}.md")
-    execute(f"{EDITOR} {note_path}")
+    run(f"{EDITOR} {note_path}", shell=True)
     note_md = load(note_path)
     note = Note(note_name, note_md["created"], note_md["updated"], note_md.content)
     note.refresh_updated()
