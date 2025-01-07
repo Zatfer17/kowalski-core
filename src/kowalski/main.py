@@ -38,7 +38,7 @@ WELCOME_TEXT = """
 
 
 def kowalscii():
-    print(WELCOME_IMAGE)
+    #print(WELCOME_IMAGE)
     print(WELCOME_TEXT)
 
 def cli():
@@ -51,21 +51,19 @@ def cli():
     save_parser = subparsers.add_parser("save", help="Save a link")
     save_parser.add_argument("link", type=str, help="The link to save. Youtube videos will be transcribed, normal URLs will be retrieved")
 
-    list_parser = subparsers.add_parser("list", help="List all notes")
-    list_parser.add_argument("--limit", type=int, nargs="?", default=50, help="The number of notes to display (optional)")
-    
-    edit_parser = subparsers.add_parser("edit", help="Edit a note")
-    edit_parser.add_argument("note", type=str, help="The note to edit")
-    
-    open_parser = subparsers.add_parser("show", help="Show a note")
-    open_parser.add_argument("note", type=str, help="The note to show")
-
-    kaboom_parser = subparsers.add_parser("kaboom", help="Transform a note with AI")
-    kaboom_parser.add_argument("note", type=str, help="The note to transform with AI")
-    kaboom_parser.add_argument("--prompt", type=str, nargs="?", default="Please summarize this note", help="The prompt to trasnform the note with")
+    open_parser = subparsers.add_parser("open", help="Open a note")
+    open_parser.add_argument("note", type=str, help="The note to open")
 
     remove_parser = subparsers.add_parser("remove", help="Remove a note")
     remove_parser.add_argument("note", type=str, help="The note to remove")
+
+    list_parser = subparsers.add_parser("list", help="List all notes")
+    list_parser.add_argument("--keyword", type=str, nargs="?", default="", help="The keyword to filter notes with (optional)")
+    list_parser.add_argument("--limit", type=int, nargs="?", default=50, help="The number of notes to display (optional)")
+    
+    kaboom_parser = subparsers.add_parser("kaboom", help="Transform a note with AI")
+    kaboom_parser.add_argument("note", type=str, help="The note to transform with AI")
+    kaboom_parser.add_argument("--prompt", type=str, nargs="?", default="Please summarize this note", help="The prompt to trasnform the note with")
     
     sync_parser = subparsers.add_parser("sync", help="Sync notes with remote")
 
@@ -82,21 +80,18 @@ def cli():
             case "save":
                 from kowalski.cmd.save import saveCmd
                 saveCmd(args.link)
-            case "list":
-                from kowalski.cmd.list import listCmd
-                listCmd(args.limit)
-            case "edit":
-                from kowalski.cmd.edit import editCmd
-                editCmd(args.note)
-            case "show":
-                from kowalski.cmd.show import showCmd
-                showCmd(args.note)
-            case "kaboom":
-                from kowalski.cmd.kaboom import kaboomCmd
-                kaboomCmd(args.note, args.prompt)
+            case "open":
+                from kowalski.cmd.open import openCmd
+                openCmd(args.note)
             case "remove":
                 from kowalski.cmd.remove import removeCmd
                 removeCmd(args.note)
+            case "list":
+                from kowalski.cmd.list import listCmd
+                listCmd(args.keyword, args.limit)
+            case "kaboom":
+                from kowalski.cmd.kaboom import kaboomCmd
+                kaboomCmd(args.note, args.prompt)
             case "sync":
                 from kowalski.cmd.sync import syncCmd
                 syncCmd()

@@ -6,7 +6,7 @@ from kowalski.internal.note   import Note
 from kowalski.internal.git    import Git
 
 
-def editCmd(note_name: str):
+def openCmd(note_name: str):
     note_path = path.join(KOWALSKI_PATH, f"{note_name}.md")
     execute(f"{EDITOR} {note_path}")
     note_md = load(note_path)
