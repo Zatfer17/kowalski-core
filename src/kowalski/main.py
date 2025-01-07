@@ -52,6 +52,7 @@ def cli():
     save_parser.add_argument("link", type=str, help="The link to save. Youtube videos will be transcribed, normal URLs will be retrieved")
 
     list_parser = subparsers.add_parser("list", help="List all notes")
+    list_parser.add_argument("--keyword", type=str, nargs="?", default="", help="The keyword to filter notes with (optional)")
     list_parser.add_argument("--limit", type=int, nargs="?", default=50, help="The number of notes to display (optional)")
     
     edit_parser = subparsers.add_parser("edit", help="Edit a note")
@@ -84,7 +85,7 @@ def cli():
                 saveCmd(args.link)
             case "list":
                 from kowalski.cmd.list import listCmd
-                listCmd(args.limit)
+                listCmd(args.keyword, args.limit)
             case "edit":
                 from kowalski.cmd.edit import editCmd
                 editCmd(args.note)
