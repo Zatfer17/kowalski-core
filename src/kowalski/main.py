@@ -58,7 +58,7 @@ def cli():
     remove_parser.add_argument("note", type=str, help="The note to remove")
 
     list_parser = subparsers.add_parser("list", help="List all notes")
-    list_parser.add_argument("--keyword", type=str, nargs="?", help="The keyword to filter notes with (optional)")
+    list_parser.add_argument("--keyword", type=str, nargs="?", defaul="", help="The keyword to filter notes with (optional)")
     list_parser.add_argument("--limit", type=int, nargs="?", default=100, help="The number of notes to display (optional)")
     
     kaboom_parser = subparsers.add_parser("kaboom", help="Transform a note with AI")

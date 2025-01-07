@@ -6,7 +6,7 @@ from kowalski.internal.note   import Note
 
 
 def listCmd(keyword: str, limit: int):
-    if keyword is None:
+    if keyword is "":
         notes_paths = glob(f"{KOWALSKI_PATH}/*.md")
     else:
         if " " in keyword:
