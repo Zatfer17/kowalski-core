@@ -31,23 +31,27 @@ Passing:
 
 ---
 
+Open a note to view or edit with `open`:
+```
+kv open 20250106164651
+```
+
+---
+
+Remove a note with `remove`:
+```
+kv remove 20250106164651
+```
+
+---
+
 List notes with `list`:
 ```
 kv list
 ```
-
----
-
-Edit a note with `edit`:
+Optionally, you can limit the number of results with the `--limit` argument and filter results based on a keyword(s) with `--keyword`:
 ```
-kv edit 20250106164651
-```
-
----
-
-Show a note with `show`:
-```
-kv show 20250106164651
+kv list --limit 5 --keyword "analysis"
 ```
 
 ---
@@ -63,28 +67,28 @@ kv kaboom 20250106164651 --prompt "Please rewrite this with pirate language"
 
 ---
 
-Remove a note with `remove`:
-```
-kv remove 20250106164651
-```
-
----
-
 Sync the notes with your Github repo with `sync`:
 ```
 kv sync
 ```
 `kowalski` will commit your changes, pull from the remote and push.
 
-## Guiding principles
-- Taking notes should be fast
-- Notes should be in markdown format
-- Notes are identified by their name
-- Notes default name should be the creation timestamp
-- Folders are forbidden
-- Tags are used for categorisation
-
 ## Install
+
+### Setup the AI
+
+- If you use **OpenAI**:
+
+```bash
+export OPENAI_API_KEY=<YOUR_OPENAI_API_KEY>
+```
+
+- If you use **Ollama**:
+
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+ollama run <MODEL>
+```
 
 ### Create the Kowalski folder
 
@@ -96,18 +100,6 @@ mkdir ~/.kowalski
 
 Update the [config](src/kowalski/internal/config.py). Note that you will have to `uv tool install . --reinstall` any time you make changes to the config.
 
-### Setup LLM of choice
-
-- If using any OPENAI model:
-
-```bash
-export OPENAI_API_KEY=<YOUR_OPENAI_API_KEY>
-```
-
-- If using Ollama:
-  - [install](https://ollama.com/download)
-  - [pull a model](https://ollama.com/search)
-  - `ollama serve`
 
 ### Install (with [uv](https://docs.astral.sh/uv/getting-started/installation/))
 
@@ -155,13 +147,20 @@ ssh -T git@github.com
   - `Storage & File Formats > Note Metadata Settings > Modified Field` = `updated`
 - Seamlessly sync notes across devices
 
+## Principles
+- Taking notes should be fast
+- Notes should be in markdown format
+- Notes are identified by their name
+- Notes default name should be the creation timestamp
+- Folders are forbidden
+- Tags are used for categorisation
+
 ## Roadmap
 - [ ] Make website
 - [ ] Use GitHub actions to run URL/YouTube parsing from mobile
 - [ ] Use GitHub actions to run kaboom from mobile or defer from cli
 - [ ] Implement Kaboom, with question. RAG capability could be implemented relying on tags for document similarity
-- [ ] Implement Init with gitPython to clone .kowalski repo
-- [ ] Implement Show with regular expression or keyword to search
+- [ ] Implement Init to clone .kowalski repo
 - [ ] Implement script for Obsidian migration
 
 ## Known issues

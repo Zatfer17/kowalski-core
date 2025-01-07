@@ -1,12 +1,20 @@
 Output assets/pictures/demo.gif
 
-Set FontSize 30
+Set FontSize 35
 Set Width 1800
 Set Height 1000
+Set Theme "Catppuccin Frappe"
+Set BorderRadius 20
 
-Type "echo 'Welcome to Kowalski!'"
+Type "kv"
+Sleep 2s
 Enter
 Sleep 5s
+
+Type "clear"
+Sleep 1s
+Enter
+Sleep 1s
 
 Type "kv add"
 Sleep 1s
@@ -32,10 +40,10 @@ Sleep 1s
 Enter
 Sleep 5s
 
-Type "kv kaboom 20250106160310 --prompt summarize"
+Type "kv kaboom 20250107170155 --prompt 'Rewrite in a pirate style'"
 Sleep 1s
 Enter
-Sleep 10s
+Sleep 15s
 
 Type "kv sync"
 Sleep 1s
