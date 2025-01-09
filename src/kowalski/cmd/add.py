@@ -1,28 +1,41 @@
-from datetime                 import datetime
-from os                       import path
-from kowalski.internal.config import KOWALSKI_PATH, EDITOR, KOWALSKI_FOLDER, GITHUB_USER, GITHUB_BRANCH, GITHUB_LOG_FILE
-from subprocess               import run
-from frontmatter              import load
+import sys
+import os
+
+from datetime    import datetime
+from frontmatter import load
+
+from kowalski.internal.config import load_config
+from kowalski.internal.run    import execute
 from kowalski.internal.note   import Note
-from kowalski.internal.git    import Git
 
 
-def addCmd(content: str):
-    created = datetime.now()
-    updated = None
-    name = created.strftime("%Y%m%d%H%M%S")
+def add_cmd(content: str):
+
+    PATH, EDITOR = load_config()
+
+    if not sys.stdin.isatty():
+        piped_content = sys.stdin.read().strip()
+        content = piped_content if piped_content else content
+
+    timestamp = datetime.now()
+
+    name = f"{timestamp.strftime("%H%M%S-%y%m%d")}.md"
+    created = timestamp.strftime("%Y%m%d%H%M%S")
+    tags = []
+
     if content is None:
-        note_path = path.join(KOWALSKI_PATH, f"{name}.md")
-        run(f"{EDITOR} {note_path}", shell=True)
-        if path.exists(note_path):
-            note_md = load(note_path)
-            content = note_md.content
-        else:
-            return
-    note = Note(name, created, updated, content)
-    note_path = path.join(KOWALSKI_PATH, f"{name}.md")
-    note.write(note_path)
-    git = Git(KOWALSKI_PATH, GITHUB_USER, KOWALSKI_FOLDER, GITHUB_BRANCH, GITHUB_LOG_FILE)
-    git.lean_commit("Added", name)
-    print(note.description("short"))
-    return note
+
+        note = Note(name, created, tags, "")
+        note.write(PATH)
+
+        note_path = os.path.join(PATH, name)
+        execute(f"{EDITOR} {note_path}")
+
+        md = load(note_path)
+        tags = md["tags"]
+        content = md.content
+
+    note = Note(name, created, tags, content)
+    note.write(PATH)
+
+    print(note)

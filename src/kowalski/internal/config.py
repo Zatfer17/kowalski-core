@@ -1,12 +1,9 @@
-from os import getenv, path
+from configparser import ConfigParser
 
-HOME = getenv("HOME")
-EDITOR = getenv("EDITOR")
-KOWALSKI_FOLDER = ".kowalski"
-KOWALSKI_PATH = path.join(HOME, KOWALSKI_FOLDER)
-GITHUB_LOG_FILE = path.join(HOME, KOWALSKI_FOLDER, ".logs")
+from kowalski.internal.consts import CONFIG_PATH
 
-# Update
-GITHUB_USER = "Zatfer17"
-GITHUB_BRANCH = "main"
-MODEL = "gpt-4o-mini"
+
+def load_config():
+    config = ConfigParser()
+    config.read(CONFIG_PATH)
+    return config["DEFAULT"]["Path"], config["DEFAULT"]["Editor"]
