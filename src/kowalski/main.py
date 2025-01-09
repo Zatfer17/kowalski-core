@@ -1,97 +1,61 @@
-from argparse import ArgumentParser
-from warnings import filterwarnings
-
-filterwarnings("ignore")
-
-
-WELCOME_IMAGE = """
-                           %%%                   
-                         =:-%#%#                 
-                        .....--..                
-                        ...:==-=:                
-                       .....-+-..%               
-                       =.........*               
-                       +.........#               
-                      #*.........#%              
-                      #=.........-%              
-                      %...........+#             
-                     %=...........:%             
-                     #:............=             
-                     %.............-#            
-                     %.............:%            
-                     %............::%            
-                     %...........::-@%           
-                     @.........:::-=@@           
-                      .......:::---=             
-                       :::::::---==              
-                        :-----==++               
-                      +=+*#  *##**              
-                      *+*#+#  +*+=+*"""
-
-WELCOME_TEXT = """
-██╗  ██╗ ██████╗ ██╗    ██╗ █████╗ ██╗     ███████╗██╗  ██╗██╗
-██║ ██╔╝██╔═══██╗██║    ██║██╔══██╗██║     ██╔════╝██║ ██╔╝██║
-█████╔╝ ██║   ██║██║ █╗ ██║███████║██║     ███████╗█████╔╝ ██║
-██╔═██╗ ██║   ██║██║███╗██║██╔══██║██║     ╚════██║██╔═██╗ ██║
-██║  ██╗╚██████╔╝╚███╔███╔╝██║  ██║███████╗███████║██║  ██╗██║
-╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝"""
+# PYTHON_ARGCOMPLETE_OK
+import argparse
+import argcomplete
 
 
-def kowalscii():
-    #print(WELCOME_IMAGE)
-    print(WELCOME_TEXT)
+def note_completer(prefix, parsed_args, **kwargs):
+    from kowalski.cmd.list import list_cmd
+    return [note.name for note in list_cmd(None) if note.name.startswith(prefix)]
 
 def cli():
-    parser = ArgumentParser(prog="kv", description="")
-    subparsers = parser.add_subparsers(dest="command", required=False)
     
+    parser = argparse.ArgumentParser(prog="ko", description="")
+    subparsers = parser.add_subparsers(dest="command", required=False)
+
     add_parser = subparsers.add_parser("add", help="Add a new note")
-    add_parser.add_argument("note", type=str, nargs="?", default=None, help="The note to add (optional). Omitting this argument will open the default editor")
+    add_parser.add_argument("--content", type=str, nargs="?", default=None, help="The content to add (optional). Omitting this argument will open the default editor")
 
-    save_parser = subparsers.add_parser("save", help="Save a link")
-    save_parser.add_argument("link", type=str, help="The link to save. Youtube videos will be transcribed, normal URLs will be retrieved")
+    save_parser = subparsers.add_parser("save", help="Save a url")
+    save_parser.add_argument("url", type=str, help="The url to save. Youtube videos will be transcribed, normal URLs will be retrieved")
+    
+    list_parser = subparsers.add_parser("list", help="List all notes")
+    list_parser.add_argument("--limit", type=int, nargs="?", default=None, help="The number of notes to display (optional)")
 
-    open_parser = subparsers.add_parser("open", help="Open a note")
-    open_parser.add_argument("note", type=str, help="The note to open")
+    find_parser = subparsers.add_parser("find", help="Find a note")
+    find_parser.add_argument("content", type=str, help="The content to search for")
+
+    show_parser = subparsers.add_parser("show", help="Show a note")
+    show_parser.add_argument("name", type=str, help="The name of the note to show").completer = note_completer
+
+    edit_parser = subparsers.add_parser("edit", help="Edit a note")
+    edit_parser.add_argument("name", type=str, help="The name of the note to edit").completer = note_completer
+    edit_parser.add_argument("--content", type=str, nargs="?", default=None, help="The content to replace (optional). Omitting this argument will open the default editor")
 
     remove_parser = subparsers.add_parser("remove", help="Remove a note")
-    remove_parser.add_argument("note", type=str, help="The note to remove")
+    remove_parser.add_argument("name", type=str, help="The name of the note to remove").completer = note_completer
 
-    list_parser = subparsers.add_parser("list", help="List all notes")
-    list_parser.add_argument("--keyword", type=str, nargs="?", defaul="", help="The keyword to filter notes with (optional)")
-    list_parser.add_argument("--limit", type=int, nargs="?", default=100, help="The number of notes to display (optional)")
-    
-    kaboom_parser = subparsers.add_parser("kaboom", help="Transform a note with AI")
-    kaboom_parser.add_argument("note", type=str, help="The note to transform with AI")
-    kaboom_parser.add_argument("--prompt", type=str, nargs="?", default="Please summarize this note", help="The prompt to trasnform the note with")
-    
-    sync_parser = subparsers.add_parser("sync", help="Sync notes with remote")
-
+    argcomplete.autocomplete(parser)
     args = parser.parse_args()
-    
-    if args.command is None:
-        kowalscii()
-    else:
-        match args.command:
-            # Not PEP8 compliant, but speed is meh otherwise
-            case "add":
-                from kowalski.cmd.add import addCmd
-                addCmd(args.note)
-            case "save":
-                from kowalski.cmd.save import saveCmd
-                saveCmd(args.link)
-            case "open":
-                from kowalski.cmd.open import openCmd
-                openCmd(args.note)
-            case "remove":
-                from kowalski.cmd.remove import removeCmd
-                removeCmd(args.note)
-            case "list":
-                from kowalski.cmd.list import listCmd
-                listCmd(args.keyword, args.limit)
-            case "kaboom":
-                from kowalski.cmd.kaboom import kaboomCmd
-                kaboomCmd(args.note, args.prompt)
-            case "sync":
-                from kowalski.cmd.sync import syncCmd
-                syncCmd()
+
+    match args.command:
+        case "add":
+            from kowalski.cmd.add  import add_cmd
+            add_cmd(args.content)
+        case "save":
+            from kowalski.cmd.save import save_cmd
+            save_cmd(args.url)
+        case "list":
+            from kowalski.cmd.list import list_cmd
+            list_cmd(args.limit)
+        case "find":
+            from kowalski.cmd.find import find_cmd
+            find_cmd(args.content)
+        case "show":
+            from kowalski.cmd.show import show_cmd
+            show_cmd(args.name)
+        case "edit":
+            from kowalski.cmd.edit import edit_cmd
+            edit_cmd(args.name, args.content)
+        case "remove":
+            from kowalski.cmd.remove import remove_cmd
+            remove_cmd(args.name)

@@ -1,37 +1,46 @@
+import os
+
+from typing   import List
 from datetime import datetime
-from json     import dumps
 
 
-TEMPLATE = """---
+TEMPLATE    = """---
+name: {}
 created: {}
-updated: {}
+tags: {}
 ---
 
 {}"""
 
 class Note():
 
-    def __init__(self, name: str, created: datetime, updated: datetime, content: str):
+    def __init__(self, name: str, created: datetime, tags: List[str], content: str):
+
         self.name    = name
         self.created = created
-        self.updated = updated
+        self.tags    = tags
         self.content = content
 
-    def refresh_updated(self):
-        self.updated = datetime.now()
+    def format(self):
 
-    def write(self, path: str):
-        f = open(path, "w")
-        f.write(TEMPLATE.format(self.created, self.updated, self.content))
+        return TEMPLATE.format(self.name, self.created, self.tags, self.content)
 
-    def description(self, mode: str):
-        match mode:
-            case "short":
-                content = self.content
-                content = content if len(content) < 50 else f"{content[:50]}[...]"
-                content = content.replace("\n", " ")
-                return f"[{self.name}] {content}"
-            case "long":
-                return TEMPLATE.format(self.created, self.updated, self.content)
-            case "json":
-                return dumps(self.__dict__, indent=4, default=str)
+    def write(self, path):
+
+        f = open(os.path.join(path, self.name), "w")
+        f.write(self.format())
+
+    def __str__(self):
+
+        content = self.content
+        content = content.replace("\n", " ")
+        content = content[:27]
+        content = content.ljust(30, ".")
+
+        tags = str(self.tags)
+        tags = tags.replace("[", "").replace("]", "")
+        tags = tags.replace("'", "")
+        tags = tags[:17]
+        tags = tags.ljust(20, ".")
+
+        return f"({self.name}) [{tags}] : [{content}]"

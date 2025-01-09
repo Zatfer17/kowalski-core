@@ -1,7 +1,9 @@
-from kowalski.internal.parse import get_type_source_content
-from kowalski.cmd.add        import addCmd
+from kowalski.internal.parse import get_content
+from kowalski.cmd.add        import add_cmd
 
 
-def saveCmd(note: str):
-    _, _, content = get_type_source_content(note)
-    addCmd(content)
+def save_cmd(url: str):
+
+    content = get_content(url)
+
+    add_cmd(content)

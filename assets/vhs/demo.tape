@@ -1,51 +1,36 @@
 Output assets/pictures/demo.gif
 
-Set FontSize 35
-Set Width 1800
-Set Height 1000
-Set Theme "Catppuccin Frappe"
-Set BorderRadius 20
+Set FontSize 20
+Set Width 1200
+Set Height 600
 
-Type "kv"
+Type "ko add"
+Sleep 1s
+Enter
+Sleep 1s
+
+Down 6
+
+Type "Welcome to Kowalski!"
 Sleep 2s
-Enter
-Sleep 5s
-
-Type "clear"
-Sleep 1s
-Enter
-Sleep 1s
-
-Type "kv add"
-Sleep 1s
-Enter
-Sleep 5s
-
-Type "How can you not be romantic about baseball?"
-Sleep 1s
 Ctrl+O
-Sleep 5s
+Sleep 1s
 Enter
-Sleep 5s
+Sleep 1s
 Ctrl+X
-Sleep 5s
+Sleep 2s
 
-Type "kv list"
+Type "ko list"
 Sleep 1s
 Enter
-Sleep 5s
+Sleep 2s
 
-Type "kv save https://www.youtube.com/watch?v=l30sADfDiM8"
+Type "ko save https://www.youtube.com/watch?v=mBFf-aYoV6Q"
 Sleep 1s
 Enter
-Sleep 5s
+Sleep 2s
 
-Type "kv kaboom 20250107170155 --prompt 'Rewrite in a pirate style'"
+Type "ko show 201406-250109.md | mods 'Please summarize this in two sentences'""
 Sleep 1s
 Enter
-Sleep 15s
-
-Type "kv sync"
-Sleep 1s
-Enter
-Sleep 5s
+Sleep 10s

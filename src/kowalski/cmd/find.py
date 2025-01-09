@@ -1,17 +1,17 @@
-from glob        import glob
 from frontmatter import load
 
 from kowalski.internal.config import load_config
+from kowalski.internal.run    import execute
 from kowalski.internal.note   import Note
 
 
-def list_cmd(limit: int):
-
+def find_cmd(content: str):
+    
     PATH, _ = load_config()
 
-    files = glob(f"{PATH}/*.md")
+    files = execute(f"grep -ril '{content}' --include='*.md' {PATH}", split=False, shell=True, output=True)
+    files = [file for file in files.splitlines() if file.strip()]
     files = sorted(files, reverse=True)
-    files = files[:limit]
 
     notes = []
     for f in files:

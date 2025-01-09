@@ -1,171 +1,127 @@
-![OS support](https://img.shields.io/badge/OS-macOS%20Linux%20Windows-green)
-![License](https://img.shields.io/badge/License-GPL%20v3-blue)
-
 <p align="center">
   <img src="assets/pictures/kowalski.png"  width="100" align="center"/>
 </p>
 
 # kowalski
 
-`kowalski` is an AI powered knowledge management system for the CLI. You can use it as a note-taking tool, a read-it-later app or a bookmarks system, using your AI model of choice (Ollama, OpenAI, Anthropic, ...).
+`kowalski` is a knowledge management system for the CLI. You can use it as a note-taking tool, a read-it-later app or a bookmarks system.
 
 ![kowalski-demo](assets/pictures/demo.gif)
 
-## Tutorial
+## Setup
 
-Create a note with `add`:
-```
-kv add "Kowalski, analysis"
-```
-Omitting the content of the note will open the default editor (`$EDITOR` environment variable).
-
----
-
-Parse a link with `save`:
-```
-kv save https://www.youtube.com/watch?v=omcF-OYS_1U
-```
-Passing:
-- a Youtube link will result in the video being transcribed
-- a normal URL will result in the content of the website (if static) being retrieved
-
----
-
-Open a note to view or edit with `open`:
-```
-kv open 20250106164651
-```
-
----
-
-Remove a note with `remove`:
-```
-kv remove 20250106164651
-```
-
----
-
-List notes with `list`:
-```
-kv list
-```
-Optionally, you can limit the number of results with the `--limit` argument and filter results based on a keyword(s) with `--keyword`:
-```
-kv list --limit 5 --keyword "analysis"
-```
-
----
-
-Transform a note with `kaboom`:
-```
-kv kaboom 20250106164651
-```
-By default `kowalski` will summarize the note. You can pass a `--prompt` argument to customize the prompt:
-```
-kv kaboom 20250106164651 --prompt "Please rewrite this with pirate language"
-```
-
----
-
-Sync the notes with your Github repo with `sync`:
-```
-kv sync
-```
-`kowalski` will commit your changes, pull from the remote and push.
-
-## Install
-
-### Setup the AI
-
-- If you use **OpenAI**:
-
+Create a config:
 ```bash
-export OPENAI_API_KEY=<YOUR_OPENAI_API_KEY>
+mkdir $HOME/.config/kowalski
+nano $HOME/.config/kowalski/config.ini
 ```
-
-- If you use **Ollama**:
-
+and populate it:
+```
+[DEFAULT]
+Path = /home/zatfer/Documents/kowalski
+Editor = nano
+```
+---
+Create the path you just specified in the config:
 ```bash
-curl -fsSL https://ollama.com/install.sh | sh
-ollama run <MODEL>
+mkdir /home/zatfer/Documents/kowalski
 ```
-
-### Create the Kowalski folder
-
-```bash
-mkdir ~/.kowalski
-```
-
-### Update the config
-
-Update the [config](src/kowalski/internal/config.py). Note that you will have to `uv tool install . --reinstall` any time you make changes to the config.
-
-
-### Install (with [uv](https://docs.astral.sh/uv/getting-started/installation/))
-
+---
+Install:
 ```bash
 git clone https://github.com/Zatfer17/kowalski
 cd kowalski
 uv tool install .
 ```
-
-### Setup SSH (only if syncing is needed)
-
-Generate one using the following command:
-
+---
+Enable autocompletion (optional but strongly advised):
 ```bash
-ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+uv tool install argcomplete
+activate-global-python-argcomplete
+eval "$(register-python-argcomplete ko)"
 ```
 
-Start the SSH agent and add your key:
+## Usage
 
+- **add**
 ```bash
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa
+# Open an editor to write a note with:
+ko add
+
+# Or quickly jot down something with:
+ko add --content "Your content goes here"
+```
+- **save**
+```bash
+# Transcribe a Youtube video with:
+ko save https://youtu.be/dQw4w9WgXcQ?si=J9KKlOmNFz75b7Cf
+# Note that this command might not work 100% of the times as it depends on the availability of the video transcription
+
+# Retrieve the content of a website (if static) with:
+ko save https://it.wikipedia.org/wiki/Stefano_Bandecchi
+```
+- **list**
+```bash
+# List all notes from latest to oldest with:
+ko list
+
+# Show only the last 10 notes:
+ko list --limit 10
+```
+- **find**
+```bash
+# Find a note by content with:
+ko find "Python is a language"
+
+# This is also case insensitive:
+ko find "python is a language"
+
+
+# Note that file name is also part of the note content so you can also use that for the lookup:
+ko find 250109 # Will return all notes written on 9th of Jan
+```
+- **show**
+```bash
+# Show the content of a note with:
+ko show 193900-250109.md
+```
+- **edit**
+```bash
+# Open an editor to edit a note with:
+ko edit 193900-250109.md
+
+# Or quickly update the content of the note with:
+ko edit 193900-250109.md --content "This is the new note content"
+```
+- **remove**
+```bash
+# Delete a note with:
+ko remove 193900-250109.md
 ```
 
-Copy your public SSH key:
+## Tricks
 
+`kowalski` plays well with other CLI tools like [mods](https://github.com/charmbracelet/mods) and [glow](https://github.com/charmbracelet/glow).
+
+For instance you can transcribe a Youtube video summarize it and put it in a note with:
 ```bash
-cat ~/.ssh/id_rsa.pub
+ko save https://www.youtube.com/watch?v=sSxGEHakfuc&t=587s # Gets saved to 195456-250109.md
+ko show 195456-250109.md | mods "Please summarize this" # Gets saved to f343930 conversation
+mods -f f343930 | ko add # Creates a new note out of the AI generated summary
+
+# Or in two shots:
+ko save https://www.youtube.com/watch?v=sSxGEHakfuc&t=587s # Gets saved to 195456-250109.md
+ko show 195456-250109.md | mods "Please summarize this" | ko add
+
+# Or simply replace the original note for simplicity:
+ko show 195456-250109.md | mods "Please summarize this" | ko edit 195456-250109.md
 ```
-Add the key to GitHub:
 
-Run the following command to test your SSH connection:
-
+You can also pretty render a note in the terminal:
 ```bash
-ssh -T git@github.com
+ko show 195456-250109.md | glow -
 ```
 
-## My suggested setup
-- Create an empty repo (no README) called `.kowalski`
-- Clone it inside HOME
-- Install gitJournal on mobile
-- Hook gitJournal to the repo
-- Update settings on gitJournal:
-  - `Storage & File Formats > New Note Filename` = `yyyymmddhhmmss`
-  - `Storage & File Formats > Note Metadata Settings > Modified Field` = `updated`
-- Seamlessly sync notes across devices
-
-## Principles
-- Taking notes should be fast
-- Notes should be in markdown format
-- Notes are identified by their name
-- Notes default name should be the creation timestamp
-- Folders are forbidden
-- Tags are used for categorisation
-
-## Roadmap
-- [ ] Make website
-- [ ] Use GitHub actions to run URL/YouTube parsing from mobile
-- [ ] Use GitHub actions to run kaboom from mobile or defer from cli
-- [ ] Implement Kaboom, with question. RAG capability could be implemented relying on tags for document similarity
-- [ ] Implement Init to clone .kowalski repo
-- [ ] Implement script for Obsidian migration
-
-## Known issues
-
-- Notes created on gitJournal won't be deleted with `kowalski`, as they are restored on first gitJournal push
 
 ## License
 
