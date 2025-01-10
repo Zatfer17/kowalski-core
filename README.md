@@ -1,12 +1,10 @@
 <p align="center">
-  <img src="assets/pictures/kowalski.png"  width="100" align="center"/>
+  <img src="assets/kowalski.png"  width="100" align="center"/>
 </p>
 
 # kowalski
 
 `kowalski` is a knowledge management system for the CLI. You can use it as a note-taking tool, a read-it-later app or a bookmarks system.
-
-![kowalski-demo](assets/pictures/demo.gif)
 
 ## Setup
 
@@ -45,16 +43,16 @@ eval "$(register-python-argcomplete ko)"
 
 - **add**
 ```bash
-# Open an editor to write a note with:
-ko add
+# Open an editor to write a note with some tags:
+ko add --tags work, aws
 
 # Or quickly jot down something with:
-ko add --content "Your content goes here"
+ko add "How can you not be romantic about Baseball?" --tags quotes, baseball
 ```
 - **save**
 ```bash
 # Transcribe a Youtube video with:
-ko save https://youtu.be/dQw4w9WgXcQ?si=J9KKlOmNFz75b7Cf
+ko save https://youtu.be/dQw4w9WgXcQ?si=J9KKlOmNFz75b7Cf --tags youtube
 # Note that this command might not work 100% of the times as it depends on the availability of the video transcription
 
 # Retrieve the content of a website (if static) with:
@@ -105,13 +103,8 @@ ko remove 193900-250109.md
 
 For instance you can transcribe a Youtube video summarize it and put it in a note with:
 ```bash
-ko save https://www.youtube.com/watch?v=sSxGEHakfuc&t=587s # Gets saved to 195456-250109.md
-ko show 195456-250109.md | mods "Please summarize this" # Gets saved to f343930 conversation
-mods -f f343930 | ko add # Creates a new note out of the AI generated summary
-
-# Or in two shots:
-ko save https://www.youtube.com/watch?v=sSxGEHakfuc&t=587s # Gets saved to 195456-250109.md
-ko show 195456-250109.md | mods "Please summarize this" | ko add
+# Create a new note out of the AI generated summary
+ko save https://www.youtube.com/watch?v=sSxGEHakfuc&t=587s | mods "Please summarize this" | ko add 
 
 # Or simply replace the original note for simplicity:
 ko show 195456-250109.md | mods "Please summarize this" | ko edit 195456-250109.md

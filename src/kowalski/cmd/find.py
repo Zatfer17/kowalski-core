@@ -11,7 +11,7 @@ def find_cmd(content: str):
 
     files = execute(f"grep -ril '{content}' --include='*.md' {PATH}", split=False, shell=True, output=True)
     files = [file for file in files.splitlines() if file.strip()]
-    files = sorted(files, reverse=True)
+    files = sorted(files, key=lambda x: (x.split('-')[1], x.split('-')[0]), reverse=True)
 
     notes = []
     for f in files:
