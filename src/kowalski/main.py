@@ -13,10 +13,12 @@ def cli():
     subparsers = parser.add_subparsers(dest="command", required=False)
 
     add_parser = subparsers.add_parser("add", help="Add a new note")
-    add_parser.add_argument("--content", type=str, nargs="?", default=None, help="The content to add (optional). Omitting this argument will open the default editor")
+    add_parser.add_argument("content", type=str, nargs="?", default=None, help="The content to add (optional). Omitting this argument will open the default editor")
+    add_parser.add_argument("--tags", type=lambda tag: tag.strip().lower(), nargs="+", default=[], help="Tags for the note, separated by space (e.g., tag1 tag2 tag3)")
 
     save_parser = subparsers.add_parser("save", help="Save a url")
     save_parser.add_argument("url", type=str, help="The url to save. Youtube videos will be transcribed, normal URLs will be retrieved")
+    save_parser.add_argument("--tags", type=lambda tag: tag.strip().lower(), nargs="+", default=[], help="Tags for the url, separated by space (e.g., tag1 tag2 tag3)")
     
     list_parser = subparsers.add_parser("list", help="List all notes")
     list_parser.add_argument("--limit", type=int, nargs="?", default=None, help="The number of notes to display (optional)")
@@ -40,10 +42,10 @@ def cli():
     match args.command:
         case "add":
             from kowalski.cmd.add  import add_cmd
-            add_cmd(args.content)
+            add_cmd(args.content, args.tags)
         case "save":
             from kowalski.cmd.save import save_cmd
-            save_cmd(args.url)
+            save_cmd(args.url, args.tags)
         case "list":
             from kowalski.cmd.list import list_cmd
             list_cmd(args.limit)

@@ -9,7 +9,7 @@ from kowalski.internal.run    import execute
 from kowalski.internal.note   import Note
 
 
-def add_cmd(content: str):
+def add_cmd(content: str, tags: list[str]):
 
     PATH, EDITOR = load_config()
 
@@ -21,7 +21,7 @@ def add_cmd(content: str):
 
     name = f"{timestamp.strftime("%H%M%S-%y%m%d")}.md"
     created = timestamp.strftime("%Y%m%d%H%M%S")
-    tags = []
+    tags = tags
 
     if content is None:
 
@@ -38,4 +38,4 @@ def add_cmd(content: str):
     note = Note(name, created, tags, content)
     note.write(PATH)
 
-    print(note)
+    print(note.format())
