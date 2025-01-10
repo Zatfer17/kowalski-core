@@ -19,7 +19,7 @@ def add_cmd(content: str, tags: list[str]):
 
     timestamp = datetime.now()
 
-    name = f"{timestamp.strftime("%H%M%S-%y%m%d")}.md"
+    name = f"{timestamp.strftime('%H%M%S-%y%m%d')}.md"
     created = timestamp.strftime("%Y%m%d%H%M%S")
     tags = tags
 
