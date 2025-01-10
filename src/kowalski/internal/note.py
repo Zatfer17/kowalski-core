@@ -2,6 +2,8 @@ import os
 
 from datetime import datetime
 
+from kowalski.internal.utils import colored, bold
+
 
 TEMPLATE    = """---
 name: {}
@@ -31,15 +33,21 @@ class Note():
 
     def __str__(self):
 
-        content = self.content
-        content = content.replace("\n", " ")
-        content = content[:27]
-        content = content.ljust(30, ".")
+        name = self.name
+        name = colored(235, 171, 52, name)
+        name = bold(name)
 
         tags = str(self.tags)
         tags = tags.replace("[", "").replace("]", "")
         tags = tags.replace("'", "")
         tags = tags[:17]
         tags = tags.ljust(20, ".")
+        tags = colored(0, 168, 138, tags)
 
-        return f"({self.name}): [🏷️  {tags}] [🗞  {content}]"
+        content = self.content
+        content = content.replace("\n", " ")
+        content = content[:27]
+        content = content.ljust(30, ".")
+        content = bold(content)
+
+        return f"({name}): [🏷️  {tags}] [🗞  {content}]"
