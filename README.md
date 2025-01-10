@@ -16,7 +16,7 @@ nano $HOME/.config/kowalski/config.ini
 and populate it:
 ```
 [DEFAULT]
-Path = /home/zatfer/Documents/kowalski
+Path = /home/zatfer/Documents/notes
 Editor = nano
 ```
 ---
