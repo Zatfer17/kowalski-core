@@ -42,4 +42,4 @@ class Note():
         tags = tags[:17]
         tags = tags.ljust(20, ".")
 
-        return f"({self.name}) [{tags}] : [{content}]"
+        return f"({self.name}): [🏷️  {tags}] [🗞  {content}]"

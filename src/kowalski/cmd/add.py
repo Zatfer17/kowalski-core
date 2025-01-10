@@ -17,10 +17,10 @@ def add_cmd(content: str, tags: list[str]):
         piped_content = sys.stdin.read().strip()
         content = piped_content if piped_content else content
 
-    timestamp = datetime.now()
+    timestamp = datetime.now().strftime('%d%b%Y-%H%M%S').upper()
 
-    name = f"{timestamp.strftime('%H%M%S-%y%m%d')}.md"
-    created = timestamp.strftime("%Y%m%d%H%M%S")
+    name = f"{timestamp}.md"
+    created = timestamp
     tags = tags
 
     if content is None:

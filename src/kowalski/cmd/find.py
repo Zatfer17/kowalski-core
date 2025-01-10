@@ -2,6 +2,7 @@ from frontmatter import load
 
 from kowalski.internal.config import load_config
 from kowalski.internal.run    import execute
+from kowalski.internal.utils  import get_date_from_filename
 from kowalski.internal.note   import Note
 
 
@@ -11,7 +12,7 @@ def find_cmd(content: str):
 
     files = execute(f"grep -ril '{content}' --include='*.md' {PATH}", split=False, shell=True, output=True)
     files = [file for file in files.splitlines() if file.strip()]
-    files = sorted(files, key=lambda x: (x.split('-')[1], x.split('-')[0]), reverse=True)
+    files = sorted(files, key=get_date_from_filename, reverse=True)
 
     notes = []
     for f in files:
@@ -19,5 +20,3 @@ def find_cmd(content: str):
         notes.append(Note(md["name"], md["created"], md["tags"], md.content))
 
     print(*notes, sep=f"\n")
-
-    return notes
