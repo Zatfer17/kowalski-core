@@ -1,6 +1,5 @@
 import os
 
-from typing   import List
 from datetime import datetime
 
 
@@ -14,7 +13,7 @@ tags: {}
 
 class Note():
 
-    def __init__(self, name: str, created: datetime, tags: List[str], content: str):
+    def __init__(self, name: str, created: datetime, tags: list[str], content: str):
 
         self.name    = name
         self.created = created
