@@ -11,7 +11,7 @@ def list_cmd(limit: int):
     PATH, _ = load_config()
 
     files = glob(f"{PATH}/*.md")
-    files = sorted(files, key=get_date_from_filename, reverse=True)
+    files = sorted(files, key=lambda x: (x.split('-')[1], x.split('-')[0]), reverse=True)
     files = files[:limit]
 
     notes = []

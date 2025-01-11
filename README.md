@@ -22,7 +22,7 @@ Editor = nano
 ---
 Create the path you just specified in the config:
 ```bash
-mkdir /home/zatfer/Documents/kowalski
+mkdir /home/zatfer/Documents/notes
 ```
 ---
 Install:
