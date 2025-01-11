@@ -16,7 +16,7 @@ nano $HOME/.config/kowalski/config.ini
 and populate it:
 ```
 [DEFAULT]
-Path = /home/zatfer/Documents/kowalski
+Path = /home/zatfer/Documents/notes
 Editor = nano
 ```
 ---
@@ -47,7 +47,7 @@ eval "$(register-python-argcomplete ko)"
 ko add --tags work, aws
 
 # Or quickly jot down something with:
-ko add "How can you not be romantic about Baseball?" --tags quotes, baseball
+ko add "How can you not be romantic about Baseball?" --tags quotes baseball
 ```
 - **save**
 ```bash
@@ -76,25 +76,25 @@ ko find "python is a language"
 
 
 # Note that file name is also part of the note content so you can also use that for the lookup:
-ko find 250109 # Will return all notes written on 9th of Jan
+ko find 09JAN2025 # Will return all notes written on 9th of Jan 2025
 ```
 - **show**
 ```bash
 # Show the content of a note with:
-ko show 193900-250109.md
+ko show 09JAN2025-193900.md
 ```
 - **edit**
 ```bash
 # Open an editor to edit a note with:
-ko edit 193900-250109.md
+ko edit 09JAN2025-193900.md
 
-# Or quickly update the content of the note with:
-ko edit 193900-250109.md --content "This is the new note content"
+# Or quickly replace the content of the note with:
+ko edit 09JAN2025-193900.md --content "This is the new note content"
 ```
 - **remove**
 ```bash
 # Delete a note with:
-ko remove 193900-250109.md
+ko remove 09JAN2025-193900.md
 ```
 
 ## Tricks
@@ -104,15 +104,15 @@ ko remove 193900-250109.md
 For instance you can transcribe a Youtube video summarize it and put it in a note with:
 ```bash
 # Create a new note out of the AI generated summary
-ko save https://www.youtube.com/watch?v=sSxGEHakfuc&t=587s | mods "Please summarize this" | ko add 
+ko save https://www.youtube.com/watch?v=sSxGEHakfuc&t=587s | mods "Please summarize this" | ko add --tags youtube
 
-# Or simply replace the original note for simplicity:
-ko show 195456-250109.md | mods "Please summarize this" | ko edit 195456-250109.md
+# Or edit a note:
+ko show 09JAN2025-193900.md | mods "Please summarize this" | ko edit 09JAN2025-193900.md
 ```
 
 You can also pretty render a note in the terminal:
 ```bash
-ko show 195456-250109.md | glow -
+ko show 09JAN2025-193900.md | glow -
 ```
 
 

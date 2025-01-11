@@ -2,6 +2,7 @@ from frontmatter import load
 
 from kowalski.internal.config import load_config
 from kowalski.internal.run    import execute
+from kowalski.internal.utils  import get_date_from_filename
 from kowalski.internal.note   import Note
 
 
@@ -19,5 +20,3 @@ def find_cmd(content: str):
         notes.append(Note(md["name"], md["created"], md["tags"], md.content))
 
     print(*notes, sep=f"\n")
-
-    return notes

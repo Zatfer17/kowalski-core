@@ -2,6 +2,7 @@ from glob        import glob
 from frontmatter import load
 
 from kowalski.internal.config import load_config
+from kowalski.internal.utils  import get_date_from_filename
 from kowalski.internal.note   import Note
 
 
