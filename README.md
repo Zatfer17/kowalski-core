@@ -44,7 +44,7 @@ eval "$(register-python-argcomplete ko)"
 - **add**
 ```bash
 # Open an editor to write a note with some tags:
-ko add --tags work, aws
+ko add --tags work aws
 
 # Or quickly jot down something with:
 ko add "How can you not be romantic about Baseball?" --tags quotes baseball
