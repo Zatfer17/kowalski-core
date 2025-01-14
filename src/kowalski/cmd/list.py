@@ -10,7 +10,7 @@ def list_cmd(limit: int):
     PATH, _ = load_config()
 
     files = glob(f"{PATH}/*.md")
-    files = sorted(files, reverse=True)
+    files = sorted(files, reverse=False)
     files = files[:limit]
 
     notes = []
