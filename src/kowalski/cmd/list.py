@@ -16,7 +16,13 @@ def list_cmd(limit: int):
     notes = []
     for f in files:
         md = load(f)
-        notes.append(Note(md["name"], md["created"], md["tags"], md.content))
+
+        # Ensure compatibility with gitJournal
+        created = md["created"]
+        name = f"{created}.md"
+        tags = md["tags"] if "tags" in md else []
+
+        notes.append(Note(name, created, tags, md.content))
 
     print(*notes, sep=f"\n")
 
