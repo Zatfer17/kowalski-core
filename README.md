@@ -76,25 +76,25 @@ ko find "python is a language"
 
 
 # Note that file name is also part of the note content so you can also use that for the lookup:
-ko find 09JAN2025 # Will return all notes written on 9th of Jan 2025
+ko find 2025-01-09 # Will return all notes written on 9th of Jan 2025
 ```
 - **show**
 ```bash
 # Show the content of a note with:
-ko show 09JAN2025-193900.md
+ko show 2025-01-09T19:39:00.md
 ```
 - **edit**
 ```bash
 # Open an editor to edit a note with:
-ko edit 09JAN2025-193900.md
+ko edit 2025-01-09T19:39:00.md
 
 # Or quickly replace the content of the note with:
-ko edit 09JAN2025-193900.md --content "This is the new note content"
+ko edit 2025-01-09T19:39:00.md --content "This is the new note content"
 ```
 - **remove**
 ```bash
 # Delete a note with:
-ko remove 09JAN2025-193900.md
+ko remove 2025-01-09T19:39:00.md
 ```
 
 ## Tricks
@@ -107,12 +107,12 @@ For instance you can transcribe a Youtube video summarize it and put it in a not
 ko save https://www.youtube.com/watch?v=sSxGEHakfuc&t=587s | mods "Please summarize this" | ko add --tags youtube
 
 # Or edit a note:
-ko show 09JAN2025-193900.md | mods "Please summarize this" | ko edit 09JAN2025-193900.md
+ko show 2025-01-09T19:39:00.md | mods "Please summarize this" | ko edit 2025-01-09T19:39:00.md
 ```
 
 You can also pretty render a note in the terminal:
 ```bash
-ko show 09JAN2025-193900.md | glow -
+ko show 2025-01-09T19:39:00.md | glow -
 ```
 
 
