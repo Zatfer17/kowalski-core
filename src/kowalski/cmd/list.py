@@ -11,7 +11,7 @@ def list_cmd(limit: int):
 
     files = glob(f"{PATH}/*.md")
     files = sorted(files, reverse=False)
-    files = files[:limit]
+    files = files if limit is None else files[-limit:]
 
     notes = []
     for f in files:
