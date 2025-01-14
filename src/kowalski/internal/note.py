@@ -50,4 +50,4 @@ class Note():
         content = content.ljust(30, ".")
         content = bold(content)
 
-        return f"({name}): [🏷️  {tags}] [🗞  {content}]"
+        return f"({name}): [🗞  {content}] [🏷️  {tags}]"
