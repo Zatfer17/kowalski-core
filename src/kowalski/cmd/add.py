@@ -17,7 +17,7 @@ def add_cmd(content: str, tags: list[str]):
         piped_content = sys.stdin.read().strip()
         content = piped_content if piped_content else content
 
-    timestamp = datetime.now().strftime('%d%b%Y-%H%M%S').upper()
+    timestamp = datetime.now().replace(microsecond=0).isoformat()
 
     name = f"{timestamp}.md"
     created = timestamp

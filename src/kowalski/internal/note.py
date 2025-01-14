@@ -5,7 +5,7 @@ from datetime import datetime
 from kowalski.internal.utils import colored, bold
 
 
-TEMPLATE    = """---
+TEMPLATE = """---
 name: {}
 created: {}
 tags: {}
