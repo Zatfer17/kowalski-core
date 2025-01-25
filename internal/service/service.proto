@@ -6,6 +6,7 @@ option go_package = "github.com/Zatfer17/kowalski-core/internal/service";
 
 service Service {
     rpc Add (AddRequest) returns (AddResponse);
+    rpc List (ListRequest) returns (ListResponse);
 }
 
 message Note {
@@ -24,4 +25,13 @@ message AddRequest {
 message AddResponse {
     string message = 1;
     Note note = 2;
+}
+
+message ListRequest {
+    int32 limit = 1;
+}
+
+message ListResponse {
+    string message = 1;
+    repeated Note notes = 2;
 }

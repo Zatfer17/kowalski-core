@@ -1,6 +1,7 @@
 package model
 
 import (
+	"strings"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -13,7 +14,6 @@ created: %s
 updated: %s
 tags: %s
 ---
-
 %s
 `
 
@@ -26,7 +26,15 @@ type Note struct {
 }
 
 func (note Note) String() string {
-	return fmt.Sprintf("(%s): [🗞  %s] [🏷️  %s]", note.Name, note.Content, note.Tags)
+
+	name := note.Name
+
+	content := note.Content
+	content =  strings.ReplaceAll(content, "\n", " ")
+
+	tags := note.Tags
+
+	return fmt.Sprintf("(%s): [%s] [%s]", name, content, tags)
 }
 
 func (note Note) Format() string {
