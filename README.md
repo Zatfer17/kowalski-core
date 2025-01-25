@@ -2,7 +2,7 @@
   <img src="assets/kowalski.png"  width="100" align="center"/>
 </p>
 
-# kowalski
+# kowalski-python
 
 `kowalski` is a knowledge management system for the CLI. You can use it as a note-taking tool, a read-it-later app or a bookmarks system.
 
