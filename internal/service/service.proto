@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package service;
+
+option go_package = "github.com/Zatfer17/kowalski/internal/service";
+
+service Service {
+    rpc Add (AddRequest) returns (AddResponse);
+}
+
+message Note {
+    string name = 1;
+    string created = 2;
+    string updated = 3;
+    repeated string tags = 4;
+    string content = 5;
+}
+
+message AddRequest {
+    string content = 1;
+    repeated string tags = 2;
+}
+
+message AddResponse {
+    string message = 1;
+    Note note = 2;
+}
