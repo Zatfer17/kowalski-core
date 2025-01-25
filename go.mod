@@ -1,4 +1,4 @@
-module github.com/Zatfer17/kowalski
+module github.com/Zatfer17/kowalski-core
 
 go 1.23.5
 

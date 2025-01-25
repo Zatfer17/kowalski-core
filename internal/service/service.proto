@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package service;
 
-option go_package = "github.com/Zatfer17/kowalski/internal/service";
+option go_package = "github.com/Zatfer17/kowalski-core/internal/service";
 
 service Service {
     rpc Add (AddRequest) returns (AddResponse);

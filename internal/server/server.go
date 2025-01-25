@@ -4,8 +4,8 @@ import (
 	"context"
 	"log"
 	"fmt"
-	"github.com/Zatfer17/kowalski/internal/service"
-	"github.com/Zatfer17/kowalski/pkg/add"
+	"github.com/Zatfer17/kowalski-core/internal/service"
+	"github.com/Zatfer17/kowalski-core/pkg/add"
 )
 
 type Server struct {

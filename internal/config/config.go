@@ -15,7 +15,7 @@ type Config struct {
 func InitConfig() (*Config, error) {
 
 	homePath := os.Getenv("HOME")
-	configPath := filepath.Join(homePath, ".config/kowalski/config.yaml")
+	configPath := filepath.Join(homePath, ".config/kowalski/core.yaml")
 	viper.SetConfigFile(configPath)
 
 	if err := viper.ReadInConfig(); err != nil {

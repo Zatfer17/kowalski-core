@@ -4,8 +4,8 @@ import (
 	"log"
 	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/Zatfer17/kowalski/pkg/add"
-	//"github.com/Zatfer17/kowalski/pkg/edit"
+	"github.com/Zatfer17/kowalski-core/pkg/add"
+	//"github.com/Zatfer17/kowalski-core/pkg/edit"
 )
 
 var addCmd = &cobra.Command{

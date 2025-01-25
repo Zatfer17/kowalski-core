@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
-	"github.com/Zatfer17/kowalski/internal/service"
-	"github.com/Zatfer17/kowalski/internal/server"
+	"github.com/Zatfer17/kowalski-core/internal/service"
+	"github.com/Zatfer17/kowalski-core/internal/server"
 )
 
 var serveCmd = &cobra.Command{

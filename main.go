@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Zatfer17/kowalski/cmd"
+	"github.com/Zatfer17/kowalski-core/cmd"
 )
 
 func main() {

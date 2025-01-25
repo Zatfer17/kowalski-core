@@ -3,8 +3,8 @@ package add
 import (
 	"fmt"
 	"time"
-	"github.com/Zatfer17/kowalski/internal/config"
-	"github.com/Zatfer17/kowalski/internal/model"
+	"github.com/Zatfer17/kowalski-core/internal/config"
+	"github.com/Zatfer17/kowalski-core/internal/model"
 )
 
 func Add(content string, tags []string) (model.Note, error) {
