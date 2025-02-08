@@ -10,9 +10,7 @@ import (
 func ParseNote(content string) (model.Note, error) {
 
 	var matter struct {
-		Name    string `yaml:"name"`
 		Created string `yaml:"created"`
-		Updated string `yaml:"updated"`
 		Tags    []string `yaml:"tags"`
 	}
 
@@ -22,9 +20,7 @@ func ParseNote(content string) (model.Note, error) {
 	}
 
 	return model.Note{
-		Name: matter.Name,
 		Created: matter.Created,
-		Updated: matter.Updated,
 		Tags: matter.Tags,
 		Content: string(rest),
 	}, nil

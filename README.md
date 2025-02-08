@@ -10,7 +10,7 @@
 
 `kowalski-core` expects a yaml config in `~/.config/kowalski`:
 ```
-mkdir ~/config/kowalski
+mkdir ~/.config/kowalski
 nano ~/.config/kowalski/core.yaml
 ```
 The config should look like:

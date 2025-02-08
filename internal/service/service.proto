@@ -18,13 +18,15 @@ message Note {
 }
 
 message AddRequest {
-    string content = 1;
-    repeated string tags = 2;
+    string name = 1;
+    string created = 2;
+    string updated = 3;
+    repeated string tags = 4;
+    string content = 5;
 }
 
 message AddResponse {
     string message = 1;
-    Note note = 2;
 }
 
 message ListRequest {
@@ -32,6 +34,5 @@ message ListRequest {
 }
 
 message ListResponse {
-    string message = 1;
-    repeated Note notes = 2;
+    repeated Note notes = 1;
 }

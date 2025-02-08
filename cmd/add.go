@@ -2,10 +2,11 @@ package cmd
 
 import (
 	"log"
+	"time"
 	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/Zatfer17/kowalski-core/pkg/add"
-	//"github.com/Zatfer17/kowalski-core/pkg/edit"
+	"github.com/Zatfer17/kowalski-core/pkg/edit"
 )
 
 var addCmd = &cobra.Command{
@@ -14,23 +15,31 @@ var addCmd = &cobra.Command{
 	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 
-		tags, _ := cmd.Flags().GetStringArray("tag")
+		created := time.Now().Local().Truncate(time.Second).Format(time.RFC3339)
 
-		content := ""
-		if len(args) > 0 {
-			content = args[0]
-		}
-		
-		note, err := add.Add(content, tags)
+		tags, err := cmd.Flags().GetStringArray("tag")
 		if err != nil {
 			log.Fatalf("Error: %v", err)
 		}
 
-		//if len(args) == 0 {
-			//Edit(note.Name)
-		//}
+		var content string;
+		if len(args) > 0 {
+			content = args[0]
+		}
 		
-		fmt.Println(note)
+		note, err := add.Add(created, tags, content)
+		if err != nil {
+			log.Fatalf("Error: %v", err)
+		}
+
+		if len(args) == 0 {
+			err := edit.Open(note.GetName())
+			if err != nil {
+				log.Fatalf("Error: %v", err)
+			}
+		} else {
+			fmt.Println(note)
+		}
 	},
 }
 

@@ -12,7 +12,10 @@ var listCmd = &cobra.Command{
 	Short: "List the notes. Skipping the limit will list all the notes.",
 	Run: func(cmd *cobra.Command, args []string) {
 
-		limit, _ := cmd.Flags().GetInt("limit")
+		limit, err := cmd.Flags().GetInt("limit")
+		if err != nil {
+			log.Fatalf("Parse error: %v", err)
+		}
 
 		notes, err := list.List(limit)
 		if err != nil {

@@ -9,41 +9,41 @@ import (
 
 
 var TEMPLATE = `---
-name: %s
 created: %s
-updated: %s
 tags: %s
 ---
 %s
 `
 
 type Note struct {
-	Name    string
 	Created string
-	Updated string
 	Tags    []string
 	Content string
 }
 
+func (note Note) GetName() string {
+	return fmt.Sprintf("%s.md", note.Created)
+}
+
 func (note Note) String() string {
-
-	name := note.Name
-
+	
+	name := note.GetName()
+	
 	content := note.Content
 	content =  strings.ReplaceAll(content, "\n", " ")
 
 	tags := note.Tags
 
-	return fmt.Sprintf("(%s): [%s] [%s]", name, content, tags)
+	return fmt.Sprintf("(%s): [%s] %s", name, content, tags)
 }
 
 func (note Note) Format() string {
-	return fmt.Sprintf(TEMPLATE, note.Name, note.Created, note.Updated, note.Tags, note.Content)
+	return fmt.Sprintf(TEMPLATE, note.Created, note.Tags, note.Content)
 }
 
 func (note Note) Write(directory string) error {
 
-	filePath := filepath.Join(directory, note.Name)
+	filePath := filepath.Join(directory, note.GetName())
 
 	f, err := os.Create(filePath)
 	if err != nil {
