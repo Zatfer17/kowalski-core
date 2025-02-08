@@ -18,13 +18,11 @@ func Open(name string) (error){
 	}
 
 	filePath := filepath.Join(config.NotesPath, name)
-
 	if _, err := os.Stat(filePath); err != nil {
 		return fmt.Errorf("error reading file: %w", err)
 	}
 	
 	cmd := exec.Command(config.Editor, filePath)
-
 	if _, err := cmd.Output(); err != nil {
 		return fmt.Errorf("error executing command: %w", err)
 	}

@@ -17,7 +17,12 @@ var listCmd = &cobra.Command{
 			log.Fatalf("Parse error: %v", err)
 		}
 
-		notes, err := list.List(limit)
+		descending, err := cmd.Flags().GetBool("descending")
+		if err != nil {
+			log.Fatalf("Parse error: %v", err)
+		}
+
+		notes, err := list.List(limit, descending)
 		if err != nil {
 			log.Fatalf("Error: %v", err)
 		}
@@ -29,5 +34,6 @@ var listCmd = &cobra.Command{
 }
 
 func init() {
-	listCmd.Flags().Int("limit", 0, "The number of notes to list,")
+	listCmd.Flags().Int("limit", 0, "The number of notes to list.")
+	listCmd.Flags().Bool("descending", false, "Sort the notes in descending order.")
 }

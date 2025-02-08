@@ -1,8 +1,9 @@
-package list
+package find
 
 import (
 	"fmt"
-	"path/filepath"
+	"os/exec"
+	"strings"
 	"sort"
 	"os"
 	"github.com/Zatfer17/kowalski-core/internal/config"
@@ -10,27 +11,29 @@ import (
 	"github.com/Zatfer17/kowalski-core/internal/parser"
 )
 
-func List(limit int, descending bool) ([]model.Note, error) {
+func Find(content string, descending bool) ([]model.Note, error){
 
 	config, err := config.InitConfig()
 	if err != nil {
 		return nil, fmt.Errorf("error reading config file: %w", err)
 	}
 
-	pattern := filepath.Join(config.NotesPath, "*.md")
-	files, err := filepath.Glob(pattern)
+	cmd := exec.Command("grep", "-ril", content, "--include=*.md", config.NotesPath)
+	output, err := cmd.Output()
 	if err != nil {
-		return nil, fmt.Errorf("error listing notes: %w", err)
+		if exitError, ok := err.(*exec.ExitError); ok && exitError.ExitCode() == 1 {
+			output = []byte{}
+		} else {
+			return nil, fmt.Errorf("error finding notes: %w", err)
+		}
 	}
+
+	files := strings.FieldsFunc(string(output), func(r rune) bool { return r == '\n' })
 
 	if descending {
 		sort.Sort(sort.Reverse(sort.StringSlice(files)))
 	} else {
 		sort.Strings(files)
-	}
-	
-	if limit > 0 && limit < len(files) {
-		files = files[len(files)-limit:]
 	}
 
 	var notes []model.Note
@@ -49,5 +52,4 @@ func List(limit int, descending bool) ([]model.Note, error) {
 	}
 
 	return notes, nil
-
 }

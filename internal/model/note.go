@@ -12,8 +12,7 @@ var TEMPLATE = `---
 created: %s
 tags: %s
 ---
-%s
-`
+%s`
 
 type Note struct {
 	Created string

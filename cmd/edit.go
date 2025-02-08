@@ -51,5 +51,5 @@ var editCmd = &cobra.Command{
 
 func init() {
 	editCmd.Flags().String("content", "", "new content")
-	editCmd.Flags().StringArray("tag", nil, "new tags (separated by comma)")
+	editCmd.Flags().StringArray("tag", []string{}, "new tags (separated by comma)")
 }
