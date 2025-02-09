@@ -13,12 +13,20 @@
 mkdir ~/.config/kowalski
 nano ~/.config/kowalski/core.yaml
 ```
+
 `core.yaml` should look like:
 ```
 notesPath: "/home/zatfer/Documents/notes" # Your (existing) notes folder
 editor: "nano" # Your editor of choice
 ```
+
 **Please note**: the `notesPath` should be the full expanded path, no symbols (`~`) or env variables (`$HOME`) allowed. This is due to how Go works.
+
+Install running:
+```
+go build -o release/ko
+sudo mv release/ko /usr/local/bin/
+```
 
 ## Usage
 
