@@ -13,12 +13,12 @@
 mkdir ~/.config/kowalski
 nano ~/.config/kowalski/core.yaml
 ```
-The config should look like:
+`core.yaml` should look like:
 ```
 notesPath: "/home/zatfer/Documents/notes" # Your (existing) notes folder
 editor: "nano" # Your editor of choice
 ```
-**Please note**: the `notesPath` should a the full expanded path, no symbols (`~`) or env variables (`$HOME`) allowed. This is due to Go.
+**Please note**: the `notesPath` should be the full expanded path, no symbols (`~`) or env variables (`$HOME`) allowed. This is due to how Go works.
 
 ## License
 
