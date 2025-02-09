@@ -8,6 +8,7 @@ service Kowalski {
     rpc Add (AddRequest) returns (AddResponse);
     rpc Edit (EditRequest) returns (EditResponse);
     rpc List (ListRequest) returns (ListResponse);
+    rpc Save (SaveRequest) returns (SaveResponse);
 }
 
 message AddRequest {
@@ -42,4 +43,13 @@ message Note {
 
 message ListResponse {
     repeated Note notes = 1;
+}
+
+message SaveRequest {
+    repeated string tags = 1;
+    string content = 2;
+}
+
+message SaveResponse {
+
 }

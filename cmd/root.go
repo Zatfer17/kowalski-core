@@ -23,6 +23,7 @@ func init() {
 	rootCmd.AddCommand(findCmd)
 	rootCmd.AddCommand(listCmd)
 	rootCmd.AddCommand(removeCmd)
+	rootCmd.AddCommand(saveCmd)
 	rootCmd.AddCommand(showCmd)
 
 	rootCmd.AddCommand(serveCmd)

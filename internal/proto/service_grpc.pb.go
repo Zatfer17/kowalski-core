@@ -22,6 +22,7 @@ const (
 	Kowalski_Add_FullMethodName  = "/service.Kowalski/Add"
 	Kowalski_Edit_FullMethodName = "/service.Kowalski/Edit"
 	Kowalski_List_FullMethodName = "/service.Kowalski/List"
+	Kowalski_Save_FullMethodName = "/service.Kowalski/Save"
 )
 
 // KowalskiClient is the client API for Kowalski service.
@@ -31,6 +32,7 @@ type KowalskiClient interface {
 	Add(ctx context.Context, in *AddRequest, opts ...grpc.CallOption) (*AddResponse, error)
 	Edit(ctx context.Context, in *EditRequest, opts ...grpc.CallOption) (*EditResponse, error)
 	List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error)
+	Save(ctx context.Context, in *SaveRequest, opts ...grpc.CallOption) (*SaveResponse, error)
 }
 
 type kowalskiClient struct {
@@ -71,6 +73,16 @@ func (c *kowalskiClient) List(ctx context.Context, in *ListRequest, opts ...grpc
 	return out, nil
 }
 
+func (c *kowalskiClient) Save(ctx context.Context, in *SaveRequest, opts ...grpc.CallOption) (*SaveResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SaveResponse)
+	err := c.cc.Invoke(ctx, Kowalski_Save_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // KowalskiServer is the server API for Kowalski service.
 // All implementations must embed UnimplementedKowalskiServer
 // for forward compatibility.
@@ -78,6 +90,7 @@ type KowalskiServer interface {
 	Add(context.Context, *AddRequest) (*AddResponse, error)
 	Edit(context.Context, *EditRequest) (*EditResponse, error)
 	List(context.Context, *ListRequest) (*ListResponse, error)
+	Save(context.Context, *SaveRequest) (*SaveResponse, error)
 	mustEmbedUnimplementedKowalskiServer()
 }
 
@@ -96,6 +109,9 @@ func (UnimplementedKowalskiServer) Edit(context.Context, *EditRequest) (*EditRes
 }
 func (UnimplementedKowalskiServer) List(context.Context, *ListRequest) (*ListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
+}
+func (UnimplementedKowalskiServer) Save(context.Context, *SaveRequest) (*SaveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Save not implemented")
 }
 func (UnimplementedKowalskiServer) mustEmbedUnimplementedKowalskiServer() {}
 func (UnimplementedKowalskiServer) testEmbeddedByValue()                  {}
@@ -172,6 +188,24 @@ func _Kowalski_List_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Kowalski_Save_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SaveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KowalskiServer).Save(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Kowalski_Save_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KowalskiServer).Save(ctx, req.(*SaveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Kowalski_ServiceDesc is the grpc.ServiceDesc for Kowalski service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -190,6 +224,10 @@ var Kowalski_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "List",
 			Handler:    _Kowalski_List_Handler,
+		},
+		{
+			MethodName: "Save",
+			Handler:    _Kowalski_Save_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

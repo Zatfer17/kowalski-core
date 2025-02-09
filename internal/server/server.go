@@ -8,6 +8,7 @@ import (
 	"github.com/Zatfer17/kowalski-core/pkg/add"
 	"github.com/Zatfer17/kowalski-core/pkg/edit"
 	"github.com/Zatfer17/kowalski-core/pkg/list"
+	"github.com/Zatfer17/kowalski-core/pkg/save"
 )
 
 type Server struct {
@@ -66,4 +67,16 @@ func (s *Server) List(ctx context.Context, req *pb.ListRequest) (*pb.ListRespons
 	}
 
 	return &pb.ListResponse{Notes: pbNotes}, nil
+}
+
+func (s *Server) Save(ctx context.Context, req *pb.SaveRequest) (*pb.SaveResponse, error) {
+
+	fmt.Printf("SaveRequest received: tags=%v, content=%s\n", req.Tags, req.Content)
+
+	_, err := save.Save(req.Tags, req.Content)
+	if err != nil {
+		return &pb.SaveResponse{}, err
+	}
+
+	return &pb.SaveResponse{}, nil
 }

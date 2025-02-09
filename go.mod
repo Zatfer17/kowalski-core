@@ -4,6 +4,8 @@ go 1.23.5
 
 require (
 	github.com/adrg/frontmatter v0.2.0
+	github.com/anaskhan96/soup v1.2.5
+	github.com/go-shiori/go-readability v0.0.0-20241012063810-92284fa8a71f
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0
 	google.golang.org/grpc v1.70.0
@@ -12,7 +14,11 @@ require (
 
 require (
 	github.com/BurntSushi/toml v0.3.1 // indirect
+	github.com/andybalholm/cascadia v1.3.2 // indirect
+	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
+	github.com/go-shiori/dom v0.0.0-20230515143342-73569d674e1c // indirect
+	github.com/gogs/chardet v0.0.0-20211120154057-b7413eaefb8f // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
