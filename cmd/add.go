@@ -18,13 +18,8 @@ var addCmd = &cobra.Command{
 		if err != nil {
 			log.Fatalf("Error: %v", err)
 		}
-
-		var content string;
-		if len(args) > 0 {
-			content = args[0]
-		}
 		
-		note, err := add.Add(tags, content)
+		note, err := add.Add(tags, args[0])
 		if err != nil {
 			log.Fatalf("Error: %v", err)
 		}
