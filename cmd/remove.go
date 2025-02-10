@@ -7,9 +7,9 @@ import (
 )
 
 var removeCmd = &cobra.Command{
-	Use:   "remove [name]",
+	Use: "remove [name]",
 	Short: "Remove a note.",
-	Args:  cobra.MaximumNArgs(1),
+	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 
 		err := remove.Remove(args[0])

@@ -8,7 +8,7 @@ import (
 )
 
 var listCmd = &cobra.Command{
-	Use:   "list [limit]",
+	Use: "list [limit]",
 	Short: "List the notes. Skipping the limit will list all the notes.",
 	Run: func(cmd *cobra.Command, args []string) {
 

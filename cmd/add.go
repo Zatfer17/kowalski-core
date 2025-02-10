@@ -9,9 +9,9 @@ import (
 )
 
 var addCmd = &cobra.Command{
-	Use:   "add [content]",
+	Use: "add [content]",
 	Short: "Add a new note. Skipping the content will open the editor of choice.",
-	Args:  cobra.MaximumNArgs(1),
+	Args: cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 
 		tags, err := cmd.Flags().GetStringArray("tag")
@@ -19,7 +19,12 @@ var addCmd = &cobra.Command{
 			log.Fatalf("Error: %v", err)
 		}
 		
-		note, err := add.Add(tags, args[0])
+		var content string
+		if len(args) > 0 {
+			content = args[0]
+		}
+
+		note, err := add.Add(tags, content)
 		if err != nil {
 			log.Fatalf("Error: %v", err)
 		}

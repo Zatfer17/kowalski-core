@@ -7,9 +7,9 @@ import (
 )
 
 var showCmd = &cobra.Command{
-	Use:   "show [name]",
+	Use: "show [name]",
 	Short: "Show a note.",
-	Args:  cobra.MaximumNArgs(1),
+	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 
 		err := show.Show(args[0])

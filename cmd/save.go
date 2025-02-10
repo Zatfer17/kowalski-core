@@ -8,9 +8,9 @@ import (
 )
 
 var saveCmd = &cobra.Command{
-	Use:   "save [link]",
+	Use: "save [link]",
 	Short: "Save a link.",
-	Args:  cobra.MaximumNArgs(1),
+	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 
 		tags, err := cmd.Flags().GetStringArray("tag")

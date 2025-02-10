@@ -7,9 +7,9 @@ import (
 )
 
 var editCmd = &cobra.Command{
-	Use:   "edit [name]",
+	Use: "edit [name]",
 	Short: "Edit a note. Skipping the content will open the editor of choice.",
-	Args:  cobra.MaximumNArgs(1),
+	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 
 		contentFlag := cmd.Flags().Lookup("content")

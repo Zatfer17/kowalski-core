@@ -8,9 +8,9 @@ import (
 )
 
 var findCmd = &cobra.Command{
-	Use:   "find [content]",
+	Use: "find [content]",
 	Short: "Find a note.",
-	Args:  cobra.MaximumNArgs(1),
+	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 
 		descending, err := cmd.Flags().GetBool("descending")
