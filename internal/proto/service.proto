@@ -7,8 +7,16 @@ option go_package = "github.com/Zatfer17/kowalski-core/internal/proto";
 service Kowalski {
     rpc Add (AddRequest) returns (AddResponse);
     rpc Edit (EditRequest) returns (EditResponse);
+    rpc Find (FindRequest) returns (FindResponse);
     rpc List (ListRequest) returns (ListResponse);
+    rpc Remove (RemoveRequest) returns (RemoveResponse);
     rpc Save (SaveRequest) returns (SaveResponse);
+}
+
+message Note {
+    string created = 1;
+    repeated string tags = 2;
+    string content = 3;
 }
 
 message AddRequest {
@@ -17,7 +25,7 @@ message AddRequest {
 }
 
 message AddResponse {
-
+    string error = 1;
 }
 
 message EditRequest {
@@ -27,7 +35,17 @@ message EditRequest {
 }
 
 message EditResponse {
+    string error = 1;
+}
 
+message FindRequest {
+    string query = 1;
+    bool descending = 2;
+}
+
+message FindResponse {
+    repeated Note notes = 1;
+    string error = 2;
 }
 
 message ListRequest {
@@ -35,14 +53,17 @@ message ListRequest {
     bool descending = 2;
 }
 
-message Note {
-    string created = 1;
-    repeated string tags = 2;
-    string content = 3;
-}
-
 message ListResponse {
     repeated Note notes = 1;
+    string error = 2;
+}
+
+message RemoveRequest {
+    string name = 1;
+}
+
+message RemoveResponse {
+    string error = 1;
 }
 
 message SaveRequest {
@@ -51,5 +72,5 @@ message SaveRequest {
 }
 
 message SaveResponse {
-
+    string error = 1;
 }
