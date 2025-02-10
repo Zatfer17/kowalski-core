@@ -7,7 +7,9 @@ import (
 	pb "github.com/Zatfer17/kowalski-core/internal/proto"
 	"github.com/Zatfer17/kowalski-core/pkg/add"
 	"github.com/Zatfer17/kowalski-core/pkg/edit"
+	"github.com/Zatfer17/kowalski-core/pkg/find"
 	"github.com/Zatfer17/kowalski-core/pkg/list"
+	"github.com/Zatfer17/kowalski-core/pkg/remove"
 	"github.com/Zatfer17/kowalski-core/pkg/save"
 )
 
@@ -21,7 +23,9 @@ func (s *Server) Add(ctx context.Context, req *pb.AddRequest) (*pb.AddResponse, 
 
 	_, err := add.Add(req.Tags, req.Content)
 	if err != nil {
-		return &pb.AddResponse{}, err
+		return &pb.AddResponse{
+			Error: err.Error(),
+		}, err
 	}
 
 	return &pb.AddResponse{}, nil
@@ -34,27 +38,56 @@ func (s *Server) Edit(ctx context.Context, req *pb.EditRequest) (*pb.EditRespons
 	if req.Tags != nil {
 		err := edit.UpdateTags(req.Name, req.Tags)
 		if err != nil {
-			return &pb.EditResponse{}, err
+			return &pb.EditResponse{
+				Error: err.Error(),
+			}, err
 		}
 	}
 
 	if req.Content != "" {
 		err := edit.UpdateContent(req.Name, req.Content)
 		if err != nil {
-			return &pb.EditResponse{}, err
+			return &pb.EditResponse{
+				Error: err.Error(),
+			}, err
 		}
 	}
 
 	return &pb.EditResponse{}, nil
 }
 
+func (s *Server) Find(ctx context.Context, req *pb.FindRequest) (*pb.FindResponse, error) {
+
+	fmt.Printf("FindRequest received: query=%s, descending=%v\n", req.Query, req.Descending)
+
+	notes, err := find.Find(req.Query, req.Descending)
+	if err != nil {
+		return &pb.FindResponse{
+			Error: err.Error(),
+		}, err
+	}
+
+	var pbNotes []*pb.Note
+	for _, n := range notes {
+		pbNotes = append(pbNotes, &pb.Note{
+			Created: n.Created,
+			Tags:    n.Tags,
+			Content: n.Content,
+		})
+	}
+
+	return &pb.FindResponse{Notes: pbNotes}, nil
+}
+
 func (s *Server) List(ctx context.Context, req *pb.ListRequest) (*pb.ListResponse, error) {
 
-	fmt.Printf("ListRequest received: limit=%d, descending=%v\n", req.Limit, req.Descending)
+	fmt.Printf("ListRequest received: limit=%d, descending=%t\n", req.Limit, req.Descending)
 
 	notes, err := list.List(int(req.Limit), req.Descending)
 	if err != nil {
-		return &pb.ListResponse{}, err
+		return &pb.ListResponse{
+			Error: err.Error(),
+		}, err
 	}
 
 	var pbNotes []*pb.Note
@@ -67,6 +100,20 @@ func (s *Server) List(ctx context.Context, req *pb.ListRequest) (*pb.ListRespons
 	}
 
 	return &pb.ListResponse{Notes: pbNotes}, nil
+}
+
+func (s *Server) Remove(ctx context.Context, req *pb.RemoveRequest) (*pb.RemoveResponse, error) {
+
+	fmt.Printf("RemoveRequest received: name=%s\n", req.Name)
+
+	err := remove.Remove(req.Name)
+	if err != nil {
+		return &pb.RemoveResponse{
+			Error: err.Error(),
+		}, err
+	}
+
+	return &pb.RemoveResponse{}, nil
 }
 
 func (s *Server) Save(ctx context.Context, req *pb.SaveRequest) (*pb.SaveResponse, error) {
