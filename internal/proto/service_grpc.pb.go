@@ -19,10 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Kowalski_Add_FullMethodName  = "/service.Kowalski/Add"
-	Kowalski_Edit_FullMethodName = "/service.Kowalski/Edit"
-	Kowalski_List_FullMethodName = "/service.Kowalski/List"
-	Kowalski_Save_FullMethodName = "/service.Kowalski/Save"
+	Kowalski_Add_FullMethodName    = "/service.Kowalski/Add"
+	Kowalski_Edit_FullMethodName   = "/service.Kowalski/Edit"
+	Kowalski_Find_FullMethodName   = "/service.Kowalski/Find"
+	Kowalski_List_FullMethodName   = "/service.Kowalski/List"
+	Kowalski_Remove_FullMethodName = "/service.Kowalski/Remove"
+	Kowalski_Save_FullMethodName   = "/service.Kowalski/Save"
 )
 
 // KowalskiClient is the client API for Kowalski service.
@@ -31,7 +33,9 @@ const (
 type KowalskiClient interface {
 	Add(ctx context.Context, in *AddRequest, opts ...grpc.CallOption) (*AddResponse, error)
 	Edit(ctx context.Context, in *EditRequest, opts ...grpc.CallOption) (*EditResponse, error)
+	Find(ctx context.Context, in *FindRequest, opts ...grpc.CallOption) (*FindResponse, error)
 	List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error)
+	Remove(ctx context.Context, in *RemoveRequest, opts ...grpc.CallOption) (*RemoveResponse, error)
 	Save(ctx context.Context, in *SaveRequest, opts ...grpc.CallOption) (*SaveResponse, error)
 }
 
@@ -63,10 +67,30 @@ func (c *kowalskiClient) Edit(ctx context.Context, in *EditRequest, opts ...grpc
 	return out, nil
 }
 
+func (c *kowalskiClient) Find(ctx context.Context, in *FindRequest, opts ...grpc.CallOption) (*FindResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(FindResponse)
+	err := c.cc.Invoke(ctx, Kowalski_Find_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *kowalskiClient) List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListResponse)
 	err := c.cc.Invoke(ctx, Kowalski_List_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *kowalskiClient) Remove(ctx context.Context, in *RemoveRequest, opts ...grpc.CallOption) (*RemoveResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RemoveResponse)
+	err := c.cc.Invoke(ctx, Kowalski_Remove_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -89,7 +113,9 @@ func (c *kowalskiClient) Save(ctx context.Context, in *SaveRequest, opts ...grpc
 type KowalskiServer interface {
 	Add(context.Context, *AddRequest) (*AddResponse, error)
 	Edit(context.Context, *EditRequest) (*EditResponse, error)
+	Find(context.Context, *FindRequest) (*FindResponse, error)
 	List(context.Context, *ListRequest) (*ListResponse, error)
+	Remove(context.Context, *RemoveRequest) (*RemoveResponse, error)
 	Save(context.Context, *SaveRequest) (*SaveResponse, error)
 	mustEmbedUnimplementedKowalskiServer()
 }
@@ -107,8 +133,14 @@ func (UnimplementedKowalskiServer) Add(context.Context, *AddRequest) (*AddRespon
 func (UnimplementedKowalskiServer) Edit(context.Context, *EditRequest) (*EditResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Edit not implemented")
 }
+func (UnimplementedKowalskiServer) Find(context.Context, *FindRequest) (*FindResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Find not implemented")
+}
 func (UnimplementedKowalskiServer) List(context.Context, *ListRequest) (*ListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
+}
+func (UnimplementedKowalskiServer) Remove(context.Context, *RemoveRequest) (*RemoveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Remove not implemented")
 }
 func (UnimplementedKowalskiServer) Save(context.Context, *SaveRequest) (*SaveResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Save not implemented")
@@ -170,6 +202,24 @@ func _Kowalski_Edit_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Kowalski_Find_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FindRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KowalskiServer).Find(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Kowalski_Find_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KowalskiServer).Find(ctx, req.(*FindRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Kowalski_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListRequest)
 	if err := dec(in); err != nil {
@@ -184,6 +234,24 @@ func _Kowalski_List_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(KowalskiServer).List(ctx, req.(*ListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Kowalski_Remove_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KowalskiServer).Remove(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Kowalski_Remove_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KowalskiServer).Remove(ctx, req.(*RemoveRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -222,8 +290,16 @@ var Kowalski_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Kowalski_Edit_Handler,
 		},
 		{
+			MethodName: "Find",
+			Handler:    _Kowalski_Find_Handler,
+		},
+		{
 			MethodName: "List",
 			Handler:    _Kowalski_List_Handler,
+		},
+		{
+			MethodName: "Remove",
+			Handler:    _Kowalski_Remove_Handler,
 		},
 		{
 			MethodName: "Save",
