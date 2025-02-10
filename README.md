@@ -4,7 +4,7 @@
 
 # kowalski-core
 
-`kowalski-core` is a hackable terminal-based [PKMS](https://www.reddit.com/r/PKMS/comments/1ae7spf/what_is_pkm/?tl=it) for the AI era. You can use it to take notes or save read-it-later content.
+`kowalski-core` is a terminal-based [PKMS](https://www.reddit.com/r/PKMS/comments/1ae7spf/what_is_pkm/?tl=it). You can use it to take notes or save read-it-later content.
 
 ## Setup
 
