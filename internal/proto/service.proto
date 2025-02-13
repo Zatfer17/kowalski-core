@@ -16,7 +16,8 @@ service Kowalski {
 message Note {
     string created = 1;
     repeated string tags = 2;
-    string content = 3;
+    string color = 3;
+    string content = 4;
 }
 
 message AddRequest {
