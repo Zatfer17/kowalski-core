@@ -14,8 +14,8 @@ import (
 
 var TEMPLATE = `---
 created: %s
-tags: %s
-color: "%s"
+tags: [%s]
+color: %s
 ---
 %s`
 
@@ -28,7 +28,7 @@ type Note struct {
 
 func generateColor(tags []string) string {
 	hash := md5.Sum([]byte(tagsToString(tags)))
-	return "#" + hex.EncodeToString(hash[:])[0:6]
+	return hex.EncodeToString(hash[:])[0:6]
 }
 
 func tagsToString(tags []string) string {
@@ -58,10 +58,9 @@ func Bold(text string) string {
 }
 
 func ColoredSquare(color string) string {
-	hex := strings.ReplaceAll(color, "#", "")
-	r, _ := strconv.ParseInt(hex[0:2], 16, 64)
-	g, _ := strconv.ParseInt(hex[2:4], 16, 64)
-	b, _ := strconv.ParseInt(hex[4:6], 16, 64)
+	r, _ := strconv.ParseInt(color[0:2], 16, 64)
+	g, _ := strconv.ParseInt(color[2:4], 16, 64)
+	b, _ := strconv.ParseInt(color[4:6], 16, 64)
 	return fmt.Sprintf("\033[48:2::%d:%d:%dm \033[49m", r, g, b)
 }
 
@@ -82,8 +81,6 @@ func (note Note) String() string {
 	content = Bold(content)
 
 	tags := strings.Join(note.Tags, ", ")
-	tags  = strings.ReplaceAll(tags, "[", "")
-	tags  = strings.ReplaceAll(tags, "]", "")
 	if len(tags) > 17 {
 		tags = tags[:17]
 	}
@@ -94,7 +91,8 @@ func (note Note) String() string {
 }
 
 func (note Note) Format() string {
-	return fmt.Sprintf(TEMPLATE, note.Created, note.Tags, note.Color, note.Content)
+	tags := strings.Join(note.Tags, ", ")
+	return fmt.Sprintf(TEMPLATE, note.Created, tags, note.Color, note.Content)
 }
 
 func (note Note) Write(directory string) error {
