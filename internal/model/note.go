@@ -15,7 +15,7 @@ import (
 var TEMPLATE = `---
 created: %s
 tags: %s
-color: %s
+color: "%s"
 ---
 %s`
 
@@ -94,7 +94,7 @@ func (note Note) String() string {
 }
 
 func (note Note) Format() string {
-	return fmt.Sprintf(TEMPLATE, note.Created, note.Tags, note.Content)
+	return fmt.Sprintf(TEMPLATE, note.Created, note.Tags, note.Color, note.Content)
 }
 
 func (note Note) Write(directory string) error {

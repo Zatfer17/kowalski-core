@@ -14,11 +14,11 @@ var addCmd = &cobra.Command{
 	Args: cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 
-		tags, err := cmd.Flags().GetStringArray("tag")
+		tags, err := cmd.Flags().GetStringSlice("tag")
 		if err != nil {
 			log.Fatalf("Error: %v", err)
 		}
-		
+
 		var content string
 		if len(args) > 0 {
 			content = args[0]
@@ -41,5 +41,5 @@ var addCmd = &cobra.Command{
 }
 
 func init() {
-	addCmd.Flags().StringArray("tag", []string{}, "tags (separated by comma)")
+	addCmd.Flags().StringSlice("tag", []string{}, "tags (separated by comma)")
 }

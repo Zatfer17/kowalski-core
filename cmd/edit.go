@@ -35,7 +35,7 @@ var editCmd = &cobra.Command{
 		tagFlag := cmd.Flags().Lookup("tag")
 		if tagFlag != nil && tagFlag.Changed {
 		
-			tags, err := cmd.Flags().GetStringArray("tag")
+			tags, err := cmd.Flags().GetStringSlice("tag")
 			if err != nil {
 				log.Fatalf("Error: %v", err)
 			}
@@ -51,5 +51,5 @@ var editCmd = &cobra.Command{
 
 func init() {
 	editCmd.Flags().String("content", "", "new content")
-	editCmd.Flags().StringArray("tag", []string{}, "new tags (separated by comma)")
+	editCmd.Flags().StringSlice("tag", []string{}, "new tags (separated by comma)")
 }

@@ -16,7 +16,7 @@ func Add(tags []string, content string) (model.Note, error) {
 
 	created := time.Now().Local().Truncate(time.Second).Format(time.RFC3339)
 
-	n := model.Note{Created: created, Tags: tags, Content: content}
+	n := model.NewNote(created, tags, content)
 	
 	if err := n.Write(config.NotesPath); err != nil {
 		return model.Note{}, fmt.Errorf("error saving note: %w", err)

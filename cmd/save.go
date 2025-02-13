@@ -13,7 +13,7 @@ var saveCmd = &cobra.Command{
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 
-		tags, err := cmd.Flags().GetStringArray("tag")
+		tags, err := cmd.Flags().GetStringSlice("tag")
 		if err != nil {
 			log.Fatalf("Error: %v", err)
 		}
@@ -28,5 +28,5 @@ var saveCmd = &cobra.Command{
 }
 
 func init() {
-	saveCmd.Flags().StringArray("tag", []string{}, "tags (separated by comma)")
+	saveCmd.Flags().StringSlice("tag", []string{}, "tags (separated by comma)")
 }
