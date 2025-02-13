@@ -72,6 +72,7 @@ func (s *Server) Find(ctx context.Context, req *pb.FindRequest) (*pb.FindRespons
 		pbNotes = append(pbNotes, &pb.Note{
 			Created: n.Created,
 			Tags:    n.Tags,
+			Color:   n.Color,
 			Content: n.Content,
 		})
 	}
@@ -95,6 +96,7 @@ func (s *Server) List(ctx context.Context, req *pb.ListRequest) (*pb.ListRespons
 		pbNotes = append(pbNotes, &pb.Note{
 			Created: n.Created,
 			Tags:    n.Tags,
+			Color:   n.Color,
 			Content: n.Content,
 		})
 	}
