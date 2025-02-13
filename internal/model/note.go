@@ -91,7 +91,7 @@ func (note Note) String() string {
 }
 
 func (note Note) Format() string {
-	tags := strings.Join(note.Tags, ", ")
+	tags := strings.Join(note.Tags, ",")
 	return fmt.Sprintf(TEMPLATE, note.Created, tags, note.Color, note.Content)
 }
 
