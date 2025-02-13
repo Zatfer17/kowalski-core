@@ -1,6 +1,9 @@
 package model
 
 import (
+	"crypto/md5"
+	"encoding/hex"
+	"sort"
 	"strings"
 	"fmt"
 	"os"
@@ -11,13 +14,34 @@ import (
 var TEMPLATE = `---
 created: %s
 tags: %s
+color: %s
 ---
 %s`
 
 type Note struct {
 	Created string
 	Tags    []string
+	Color   string
 	Content string
+}
+
+func generateColor(tags []string) string {
+	hash := md5.Sum([]byte(tagsToString(tags)))
+	return "#" + hex.EncodeToString(hash[:])[0:6]
+}
+
+func tagsToString(tags []string) string {
+	return "||" + (string)(append([]byte(nil), []byte(tags[0])...))
+}
+
+func NewNote(created string, tags []string, content string) Note {
+	sort.Strings(tags)
+	return Note{
+		Created: created,
+		Tags:    tags,
+		Color:   generateColor(tags),
+		Content: content,
+	}
 }
 
 func (note Note) GetName() string {
