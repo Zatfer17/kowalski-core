@@ -27,12 +27,12 @@ type Note struct {
 }
 
 func generateColor(tags []string) string {
-	hash := md5.Sum([]byte(tagsToString(tags)))
-	return hex.EncodeToString(hash[:])[0:6]
+    hash := md5.Sum([]byte(tagsToString(tags)))
+    return hex.EncodeToString(hash[:])[:6]
 }
 
 func tagsToString(tags []string) string {
-	return "||" + (string)(append([]byte(nil), []byte(tags[0])...))
+    return "||" + strings.Join(tags, "||")
 }
 
 func NewNote(created string, tags []string, content string) Note {
