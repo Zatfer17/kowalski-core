@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 )
 
 
@@ -56,8 +57,18 @@ func Bold(text string) string {
 	return fmt.Sprintf("\033[1m%s\033[0m", text)
 }
 
+func ColoredSquare(color string) string {
+	hex := strings.ReplaceAll(color, "#", "")
+	r, _ := strconv.ParseInt(hex[0:2], 16, 64)
+	g, _ := strconv.ParseInt(hex[2:4], 16, 64)
+	b, _ := strconv.ParseInt(hex[4:6], 16, 64)
+	return fmt.Sprintf("\033[48:2::%d:%d:%dm \033[49m", r, g, b)
+}
+
 func (note Note) String() string {
-	
+
+	color := ColoredSquare(note.Color)
+
 	name := note.GetName()
 	name  = Colored(235, 171, 52, name)
 	name  = Bold(name)
@@ -79,7 +90,7 @@ func (note Note) String() string {
 	tags = tags + strings.Repeat(".", 20-len(tags))
 	tags = Colored(0, 168, 138, tags)
 
-	return fmt.Sprintf("(%s): [🗞  %s] [🏷️  %s]", name, content, tags)
+	return fmt.Sprintf("%s (%s): [🗞  %s] [🏷️  %s]", color, name, content, tags)
 }
 
 func (note Note) Format() string {
