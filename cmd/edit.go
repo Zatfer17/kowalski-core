@@ -2,8 +2,9 @@ package cmd
 
 import (
 	"log"
-	"github.com/spf13/cobra"
+
 	"github.com/Zatfer17/kowalski-core/pkg/edit"
+	"github.com/spf13/cobra"
 )
 
 var editCmd = &cobra.Command{
@@ -25,11 +26,6 @@ var editCmd = &cobra.Command{
 				log.Fatalf("Error: %v", err)
 			}
 			
-		} else {
-			err := edit.Open(args[0])
-			if err != nil {
-				log.Fatalf("Error: %v", err)
-			}
 		}
 
 		tagFlag := cmd.Flags().Lookup("tag")
@@ -41,6 +37,13 @@ var editCmd = &cobra.Command{
 			}
 
 			err = edit.UpdateTags(args[0], tags)
+			if err != nil {
+				log.Fatalf("Error: %v", err)
+			}
+		}
+
+		if !(contentFlag != nil && contentFlag.Changed) && !(tagFlag != nil && tagFlag.Changed) {
+			err := edit.Open(args[0])
 			if err != nil {
 				log.Fatalf("Error: %v", err)
 			}

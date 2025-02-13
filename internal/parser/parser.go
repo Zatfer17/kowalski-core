@@ -16,7 +16,6 @@ func ParseNote(content string) (model.Note, error) {
 	var matter struct {
 		Created string `yaml:"created"`
 		Tags    []string `yaml:"tags"`
-		Color   string `yaml:"color"`
 	}
 
 	rest, err := frontmatter.MustParse(strings.NewReader(content), &matter)
@@ -24,14 +23,7 @@ func ParseNote(content string) (model.Note, error) {
 		return model.Note{}, fmt.Errorf("invalid note format")
 	}
 
-	fmt.Println(matter.Color)
-
-	return model.Note{
-		Created: matter.Created,
-		Tags: matter.Tags,
-		Color: matter.Color,
-		Content: string(rest),
-	}, nil
+	return model.NewNote(matter.Created, matter.Tags, string(rest)), nil
 }
 
 var (
