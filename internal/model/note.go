@@ -1,7 +1,6 @@
 package model
 
 import (
-	"sort"
 	"strings"
 	"fmt"
 	"os"
@@ -24,7 +23,6 @@ type Note struct {
 }
 
 func NewNote(created string, tags []string, content string) Note {
-	sort.Strings(tags)
 	return Note{
 		Created: created,
 		Tags:    tags,

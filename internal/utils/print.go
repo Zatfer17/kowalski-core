@@ -2,19 +2,59 @@ package utils
 
 import (
 	"crypto/md5"
-	"encoding/hex"
-	"strings"
 	"strconv"
 	"fmt"
+	"path/filepath"
+	"os"
+	"log"
+	"encoding/csv"
+	"strings"
 )
 
-func GenerateColor(tags []string) string {
-    hash := md5.Sum([]byte(tagsToString(tags)))
-    return hex.EncodeToString(hash[:])[:6]
+var palette []string
+
+func init() {
+    csvPath := filepath.Join("internal", "utils", "palette.csv")
+    file, err := os.Open(csvPath)
+    if err != nil {
+        log.Fatalf("Failed to open palette file: %v", err)
+    }
+    defer file.Close()
+
+    reader := csv.NewReader(file)
+    records, err := reader.ReadAll()
+    if err != nil {
+        log.Fatalf("Failed to read palette data: %v", err)
+    }
+
+    if len(records) == 0 {
+        log.Fatalf("Palette file is empty")
+    }
+
+    palette = make([]string, 0, len(records))
+    for i, record := range records {
+        if len(record) == 0 || record[0] == "" {
+            log.Fatalf("Empty color code at line %d", i+1)
+        }
+        color := strings.TrimPrefix(record[0], "#")
+        color = strings.TrimSuffix(color, ",")
+        
+        if len(color) != 6 {
+            log.Fatalf("Invalid color code at line %d: %s", i+1, record[0])
+        }
+        palette = append(palette, color)
+    }
 }
 
-func tagsToString(tags []string) string {
-    return "||" + strings.Join(tags, "||")
+func GenerateColor(tags []string) string {
+    if len(tags) == 0 {
+        return "282A36"
+    }
+    
+    firstTag := tags[0]
+    hash := md5.Sum([]byte(firstTag))
+    index := int(hash[0]) % len(palette)
+    return palette[index]
 }
 
 func ColoredSquare(color string) string {
