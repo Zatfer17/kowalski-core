@@ -52,6 +52,10 @@ Flags:
 Use "ko [command] --help" for more information about a command.
 ```
 
+## Credits
+
+- color palette: https://sashamaps.net/docs/resources/20-colors/
+
 ## License
 
 `kowalski-core` is distributed under the terms of the [GNU general public license](https://www.gnu.org/licenses/gpl-3.0.html).

@@ -48,7 +48,7 @@ func init() {
 
 func GenerateColor(tags []string) string {
     if len(tags) == 0 {
-        return "282A36"
+        return "000000"
     }
     
     firstTag := tags[0]
