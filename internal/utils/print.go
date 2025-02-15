@@ -4,46 +4,29 @@ import (
 	"crypto/md5"
 	"strconv"
 	"fmt"
-	"path/filepath"
-	"os"
-	"log"
-	"encoding/csv"
-	"strings"
 )
 
-var palette []string
-
-func init() {
-    csvPath := filepath.Join("internal", "utils", "palette.csv")
-    file, err := os.Open(csvPath)
-    if err != nil {
-        log.Fatalf("Failed to open palette file: %v", err)
-    }
-    defer file.Close()
-
-    reader := csv.NewReader(file)
-    records, err := reader.ReadAll()
-    if err != nil {
-        log.Fatalf("Failed to read palette data: %v", err)
-    }
-
-    if len(records) == 0 {
-        log.Fatalf("Palette file is empty")
-    }
-
-    palette = make([]string, 0, len(records))
-    for i, record := range records {
-        if len(record) == 0 || record[0] == "" {
-            log.Fatalf("Empty color code at line %d", i+1)
-        }
-        color := strings.TrimPrefix(record[0], "#")
-        color = strings.TrimSuffix(color, ",")
-        
-        if len(color) != 6 {
-            log.Fatalf("Invalid color code at line %d: %s", i+1, record[0])
-        }
-        palette = append(palette, color)
-    }
+var palette = []string{
+	"e6194B",
+	"3cb44b",
+	"ffe119",
+	"4363d8",
+	"f58231",
+	"911eb4",
+	"42d4f4",
+	"f032e6",
+	"bfef45",
+	"fabed4",
+	"469990",
+	"dcbeff",
+	"9A6324",
+	"fffac8", 
+	"800000",
+	"aaffc3",
+	"808000",
+	"ffd8b1",
+	"000075",
+	"a9a9a9",
 }
 
 func GenerateColor(tags []string) string {
