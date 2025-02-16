@@ -52,7 +52,10 @@ func UpdateTags(name string, tags []string) (error) {
 
 	if tags != nil {
 		note.Tags = tags
-		note.Write(config.NotesPath)
+		err = note.Write(config.NotesPath)
+		if err != nil {
+			return fmt.Errorf("error writing note %s: %w", filePath, err)
+		}
 	}
 
 	return nil
@@ -80,7 +83,10 @@ func UpdateContent(name string, content string) (error) {
 
 	if content != "" {
 		note.Content = content
-		note.Write(config.NotesPath)
+		err = note.Write(config.NotesPath)
+		if err != nil {
+			return fmt.Errorf("error writing note %s: %w", filePath, err)
+		}
 	}
 
 	return nil

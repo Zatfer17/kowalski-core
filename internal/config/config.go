@@ -10,6 +10,8 @@ import (
 type Config struct {
 	Editor    string
 	NotesPath string
+	Model     string
+	ApiKey    string
 }
 
 func InitConfig() (*Config, error) {
@@ -30,9 +32,19 @@ func InitConfig() (*Config, error) {
 		return nil, fmt.Errorf("config key 'editor' is not set in the configuration file")
 	}
 
+	if !viper.IsSet("model") {
+		return nil, fmt.Errorf("config key 'model' is not set in the configuration file")
+	}
+
+	if !viper.IsSet("apiKey") {
+		return nil, fmt.Errorf("config key 'apiKey' is not set in the configuration file")
+	}
+
 	config := &Config{
 		Editor:    viper.GetString("editor"),
 		NotesPath: viper.GetString("notesPath"),
+		Model:     viper.GetString("model"),
+		ApiKey:    viper.GetString("apiKey"),
 	}
 
 	return config, nil

@@ -19,6 +19,7 @@ func Execute() {
 
 func init() {
 	rootCmd.AddCommand(addCmd)
+	rootCmd.AddCommand(cookCmd)
 	rootCmd.AddCommand(editCmd)
 	rootCmd.AddCommand(findCmd)
 	rootCmd.AddCommand(listCmd)
