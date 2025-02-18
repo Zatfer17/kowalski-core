@@ -21,7 +21,7 @@ var editCmd = &cobra.Command{
 				log.Fatalf("Error: %v", err)
 			}
 
-			err = edit.UpdateContent(args[0], content)
+			_, err = edit.UpdateContent(args[0], content)
 			if err != nil {
 				log.Fatalf("Error: %v", err)
 			}
@@ -36,7 +36,7 @@ var editCmd = &cobra.Command{
 				log.Fatalf("Error: %v", err)
 			}
 
-			err = edit.UpdateTags(args[0], tags)
+			_, err = edit.UpdateTags(args[0], tags)
 			if err != nil {
 				log.Fatalf("Error: %v", err)
 			}
