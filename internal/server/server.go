@@ -51,8 +51,6 @@ func (s *Server) Cook(ctx context.Context, req *pb.CookRequest) (*pb.CookRespons
 		}, err
 	}
 
-	fmt.Println(note)
-
 	return &pb.CookResponse{
 		Note: &pb.Note{
 			Created: note.Created,
