@@ -6,6 +6,7 @@ option go_package = "github.com/Zatfer17/kowalski-core/internal/proto";
 
 service Kowalski {
     rpc Add (AddRequest) returns (AddResponse);
+    rpc Cook (CookRequest) returns (CookResponse);
     rpc Edit (EditRequest) returns (EditResponse);
     rpc Find (FindRequest) returns (FindResponse);
     rpc List (ListRequest) returns (ListResponse);
@@ -26,6 +27,15 @@ message AddRequest {
 }
 
 message AddResponse {
+    string error = 1;
+}
+
+message CookRequest {
+    string name = 1;
+    string prompt = 2;
+}
+
+message CookResponse {
     string error = 1;
 }
 

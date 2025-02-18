@@ -6,6 +6,7 @@ import (
 
 	pb "github.com/Zatfer17/kowalski-core/internal/proto"
 	"github.com/Zatfer17/kowalski-core/pkg/add"
+	"github.com/Zatfer17/kowalski-core/pkg/cook"
 	"github.com/Zatfer17/kowalski-core/pkg/edit"
 	"github.com/Zatfer17/kowalski-core/pkg/find"
 	"github.com/Zatfer17/kowalski-core/pkg/list"
@@ -29,6 +30,21 @@ func (s *Server) Add(ctx context.Context, req *pb.AddRequest) (*pb.AddResponse, 
 	}
 
 	return &pb.AddResponse{}, nil
+}
+
+func (s *Server) Cook(ctx context.Context, req *pb.CookRequest) (*pb.CookResponse, error) {
+
+	fmt.Printf("EditRequest received: name=%s, prompt=%s", req.Name, req.Prompt)
+
+	_, err := cook.Cook(req.Name, req.Prompt)
+	if err != nil {
+		return &pb.CookResponse{
+			Error: err.Error(),
+		}, err
+	}
+
+	return &pb.CookResponse{}, nil
+
 }
 
 func (s *Server) Edit(ctx context.Context, req *pb.EditRequest) (*pb.EditResponse, error) {
