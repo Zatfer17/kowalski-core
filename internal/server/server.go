@@ -42,7 +42,7 @@ func (s *Server) Add(ctx context.Context, req *pb.AddRequest) (*pb.AddResponse, 
 
 func (s *Server) Cook(ctx context.Context, req *pb.CookRequest) (*pb.CookResponse, error) {
 
-	fmt.Printf("EditRequest received: name=%s, prompt=%s", req.Name, req.Prompt)
+	fmt.Printf("CookRequest received: name=%s, prompt=%s", req.Name, req.Prompt)
 
 	note, err := cook.Cook(req.Name, req.Prompt)
 	if err != nil {
@@ -50,6 +50,8 @@ func (s *Server) Cook(ctx context.Context, req *pb.CookRequest) (*pb.CookRespons
 			Error: err.Error(),
 		}, err
 	}
+
+	fmt.Println(note)
 
 	return &pb.CookResponse{
 		Note: &pb.Note{
