@@ -15,7 +15,7 @@ var serveCmd = &cobra.Command{
 	Use:   "serve",
 	Short: "Start kowalski in server mode.",
 	Run: func(cmd *cobra.Command, args []string) {
-		lis, err := net.Listen("tcp", ":50051")
+		lis, err := net.Listen("tcp", "0.0.0.0:50051")
 		if err != nil {
 			log.Fatalf("Failed to listen: %v", err)
 		}
