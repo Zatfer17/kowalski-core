@@ -18,6 +18,8 @@ nano ~/.config/kowalski/core.yaml
 ```
 notesPath: "/home/zatfer/Documents/notes" # Your (existing) notes folder
 editor: "nano" # Your editor of choice
+model: "google/gemini-2.0-flash-lite-preview-02-05:free" # Your OpenRouter model of choice
+apiKey: "sk-or-v1-blabla" # Your Openrouter API key
 ```
 
 **Please note**: the `notesPath` should be the full expanded path, no symbols (`~`) or env variables (`$HOME`) allowed. This is due to how Go works.
