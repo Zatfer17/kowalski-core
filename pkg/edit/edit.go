@@ -8,6 +8,7 @@ import (
 
 	"github.com/Zatfer17/kowalski-core/internal/config"
 	"github.com/Zatfer17/kowalski-core/internal/parser"
+	"github.com/Zatfer17/kowalski-core/internal/model"
 )
 
 func Open(name string) (error){
@@ -30,64 +31,64 @@ func Open(name string) (error){
 	return nil
 }
 
-func UpdateTags(name string, tags []string) (error) {
+func UpdateTags(name string, tags []string) (model.Note, error) {
 
 	var err error
 
 	config, err := config.InitConfig()
 	if err != nil {
-		return fmt.Errorf("error reading config file: %w", err)
+		return model.Note{}, fmt.Errorf("error reading config file: %w", err)
 	}
 
 	filePath := filepath.Join(config.NotesPath, name)
 	fileContent, err := os.ReadFile(filePath)
 	if err != nil {
-		return fmt.Errorf("error reading file %s: %w", filePath, err)
+		return model.Note{}, fmt.Errorf("error reading file %s: %w", filePath, err)
 	}
 
 	note, err := parser.ParseNote(string(fileContent))
 	if err != nil {
-		return fmt.Errorf("error parsing note %s: %w", filePath, err)
+		return model.Note{}, fmt.Errorf("error parsing note %s: %w", filePath, err)
 	}
 
 	if tags != nil {
 		note.Tags = tags
 		err = note.Write(config.NotesPath)
 		if err != nil {
-			return fmt.Errorf("error writing note %s: %w", filePath, err)
+			return model.Note{}, fmt.Errorf("error writing note %s: %w", filePath, err)
 		}
 	}
 
-	return nil
+	return note, nil
 }
 
-func UpdateContent(name string, content string) (error) {
+func UpdateContent(name string, content string) (model.Note, error) {
 
 	var err error
 
 	config, err := config.InitConfig()
 	if err != nil {
-		return fmt.Errorf("error reading config file: %w", err)
+		return model.Note{}, fmt.Errorf("error reading config file: %w", err)
 	}
 
 	filePath := filepath.Join(config.NotesPath, name)
 	fileContent, err := os.ReadFile(filePath)
 	if err != nil {
-		return fmt.Errorf("error reading file %s: %w", filePath, err)
+		return model.Note{}, fmt.Errorf("error reading file %s: %w", filePath, err)
 	}
 
 	note, err := parser.ParseNote(string(fileContent))
 	if err != nil {
-		return fmt.Errorf("error parsing note %s: %w", filePath, err)
+		return model.Note{}, fmt.Errorf("error parsing note %s: %w", filePath, err)
 	}
 
 	if content != "" {
 		note.Content = content
 		err = note.Write(config.NotesPath)
 		if err != nil {
-			return fmt.Errorf("error writing note %s: %w", filePath, err)
+			return model.Note{}, fmt.Errorf("error writing note %s: %w", filePath, err)
 		}
 	}
 
-	return nil
+	return note, nil
 }

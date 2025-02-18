@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/Zatfer17/kowalski-core/internal/model"
 	pb "github.com/Zatfer17/kowalski-core/internal/proto"
 	"github.com/Zatfer17/kowalski-core/pkg/add"
 	"github.com/Zatfer17/kowalski-core/pkg/cook"
@@ -22,28 +23,42 @@ func (s *Server) Add(ctx context.Context, req *pb.AddRequest) (*pb.AddResponse, 
 
 	fmt.Printf("AddRequest received: tags=%v, content=%s\n", req.Tags, req.Content)
 
-	_, err := add.Add(req.Tags, req.Content)
+	note, err := add.Add(req.Tags, req.Content)
 	if err != nil {
 		return &pb.AddResponse{
 			Error: err.Error(),
 		}, err
 	}
 
-	return &pb.AddResponse{}, nil
+	return &pb.AddResponse{
+		Note: &pb.Note{
+			Created: note.Created,
+			Tags:    note.Tags,
+			Color:   note.Color,
+			Content: note.Content,
+		},
+	}, nil
 }
 
 func (s *Server) Cook(ctx context.Context, req *pb.CookRequest) (*pb.CookResponse, error) {
 
 	fmt.Printf("EditRequest received: name=%s, prompt=%s", req.Name, req.Prompt)
 
-	_, err := cook.Cook(req.Name, req.Prompt)
+	note, err := cook.Cook(req.Name, req.Prompt)
 	if err != nil {
 		return &pb.CookResponse{
 			Error: err.Error(),
 		}, err
 	}
 
-	return &pb.CookResponse{}, nil
+	return &pb.CookResponse{
+		Note: &pb.Note{
+			Created: note.Created,
+			Tags:    note.Tags,
+			Color:   note.Color,
+			Content: note.Content,
+		},
+	}, nil
 
 }
 
@@ -51,8 +66,11 @@ func (s *Server) Edit(ctx context.Context, req *pb.EditRequest) (*pb.EditRespons
 
 	fmt.Printf("EditRequest received: name=%s, tags=%v, content=%s\n", req.Name, req.Tags, req.Content)
 
+	var note model.Note
+	var err error
+
 	if req.Tags != nil {
-		err := edit.UpdateTags(req.Name, req.Tags)
+		note, err = edit.UpdateTags(req.Name, req.Tags)
 		if err != nil {
 			return &pb.EditResponse{
 				Error: err.Error(),
@@ -61,7 +79,7 @@ func (s *Server) Edit(ctx context.Context, req *pb.EditRequest) (*pb.EditRespons
 	}
 
 	if req.Content != "" {
-		err := edit.UpdateContent(req.Name, req.Content)
+		note, err = edit.UpdateContent(req.Name, req.Content)
 		if err != nil {
 			return &pb.EditResponse{
 				Error: err.Error(),
@@ -69,7 +87,14 @@ func (s *Server) Edit(ctx context.Context, req *pb.EditRequest) (*pb.EditRespons
 		}
 	}
 
-	return &pb.EditResponse{}, nil
+	return &pb.EditResponse{
+		Note: &pb.Note{
+			Created: note.Created,
+			Tags:    note.Tags,
+			Color:   note.Color,
+			Content: note.Content,
+		},
+	}, nil
 }
 
 func (s *Server) Find(ctx context.Context, req *pb.FindRequest) (*pb.FindResponse, error) {
@@ -138,10 +163,19 @@ func (s *Server) Save(ctx context.Context, req *pb.SaveRequest) (*pb.SaveRespons
 
 	fmt.Printf("SaveRequest received: tags=%v, content=%s\n", req.Tags, req.Content)
 
-	_, err := save.Save(req.Tags, req.Content)
+	note, err := save.Save(req.Tags, req.Content)
 	if err != nil {
-		return &pb.SaveResponse{}, err
+		return &pb.SaveResponse{
+			Error: err.Error(),
+		}, err
 	}
 
-	return &pb.SaveResponse{}, nil
+	return &pb.SaveResponse{
+		Note: &pb.Note{
+			Created: note.Created,
+			Tags:    note.Tags,
+			Color:   note.Color,
+			Content: note.Content,
+		},
+	}, nil
 }
