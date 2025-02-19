@@ -2,33 +2,25 @@
   <img src="assets/kowalski.png" width="80" align="center"/>
 </p>
 
-# kowalski-core
+# `kowalski-core`
 
-`kowalski-core` is a terminal-based [PKMS](https://www.reddit.com/r/PKMS/comments/1ae7spf/what_is_pkm/?tl=it). You can use it to take notes or save read-it-later content.
 
-## Setup
+![GitHub top language](https://img.shields.io/github/languages/top/Zatfer17/kowalski-core)
+![GitHub last commit](https://img.shields.io/github/last-commit/Zatfer17/kowalski-core)
+[![License: GPL-3.0](https://img.shields.io/badge/License-GPL-orange.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 
-`kowalski-core` expects a yaml config in `~/.config/kowalski`:
-```
-mkdir ~/.config/kowalski
-nano ~/.config/kowalski/core.yaml
-```
+`kowalski-core` is an AI-powered terminal-based [PKMS](https://www.reddit.com/r/PKMS/comments/1ae7spf/what_is_pkm/?tl=it). You can use it to take notes or save read-it-later content.
 
-`core.yaml` should look like:
-```
-notesPath: "/home/zatfer/Documents/notes" # Your (existing) notes folder
-editor: "nano" # Your editor of choice
-model: "google/gemini-2.0-flash-lite-preview-02-05:free" # Your OpenRouter model of choice
-apiKey: "sk-or-v1-blabla" # Your Openrouter API key
-```
+## Install
 
-**Please note**: the `notesPath` should be the full expanded path, no symbols (`~`) or env variables (`$HOME`) allowed. This is due to how Go works.
-
-Install running:
-```
-go build -o release/ko
-sudo mv release/ko /usr/local/bin/
-```
+- [Install go](https://go.dev/doc/install)
+- Sign up at [OpenRouter](https://openrouter.ai/)
+- Run `make all`
+- Update the yaml config. Note that:
+  - `notesPath` is the full **expanded** path where you will save your notes
+  - `editor` is the default editor `kowalski-core` will use
+  - `model` is the OpenRouter model id you get from [here](https://openrouter.ai/models)
+  - `apiKey` is your OpenRouter api key
 
 ## Usage
 
@@ -39,6 +31,7 @@ Usage:
 Available Commands:
   add         Add a new note. Skipping the content will open the editor of choice.
   completion  Generate the autocompletion script for the specified shell
+  cook        Cook a note with AI.
   edit        Edit a note. Skipping the content will open the editor of choice.
   find        Find a note.
   help        Help about any command
@@ -53,10 +46,6 @@ Flags:
 
 Use "ko [command] --help" for more information about a command.
 ```
-
-## Credits
-
-- color palette: https://sashamaps.net/docs/resources/20-colors/
 
 ## License
 

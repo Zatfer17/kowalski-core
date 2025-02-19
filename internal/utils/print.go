@@ -6,6 +6,7 @@ import (
 	"fmt"
 )
 
+// Kindly taken from: https://sashamaps.net/docs/resources/20-colors/
 var palette = []string{
 	"e6194B",
 	"3cb44b",

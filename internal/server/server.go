@@ -21,7 +21,7 @@ type Server struct {
 
 func (s *Server) Add(ctx context.Context, req *pb.AddRequest) (*pb.AddResponse, error) {
 
-	fmt.Printf("AddRequest received: tags=%v, content=%s\n", req.Tags, req.Content)
+	fmt.Printf("AddRequest received")
 
 	note, err := add.Add(req.Tags, req.Content)
 	if err != nil {
@@ -42,7 +42,7 @@ func (s *Server) Add(ctx context.Context, req *pb.AddRequest) (*pb.AddResponse, 
 
 func (s *Server) Cook(ctx context.Context, req *pb.CookRequest) (*pb.CookResponse, error) {
 
-	fmt.Printf("CookRequest received: name=%s, prompt=%s", req.Name, req.Prompt)
+	fmt.Printf("CookRequest received")
 
 	note, err := cook.Cook(req.Name, req.Prompt)
 	if err != nil {
@@ -64,7 +64,7 @@ func (s *Server) Cook(ctx context.Context, req *pb.CookRequest) (*pb.CookRespons
 
 func (s *Server) Edit(ctx context.Context, req *pb.EditRequest) (*pb.EditResponse, error) {
 
-	fmt.Printf("EditRequest received: name=%s, tags=%v, content=%s\n", req.Name, req.Tags, req.Content)
+	fmt.Printf("EditRequest received")
 
 	var note model.Note
 	var err error
@@ -161,7 +161,7 @@ func (s *Server) Remove(ctx context.Context, req *pb.RemoveRequest) (*pb.RemoveR
 
 func (s *Server) Save(ctx context.Context, req *pb.SaveRequest) (*pb.SaveResponse, error) {
 
-	fmt.Printf("SaveRequest received: tags=%v, content=%s\n", req.Tags, req.Content)
+	fmt.Printf("SaveRequest received")
 
 	note, err := save.Save(req.Tags, req.Content)
 	if err != nil {
