@@ -11,6 +11,10 @@
 
 `kowalski-core` is an AI-powered terminal-based [PKMS](https://www.reddit.com/r/PKMS/comments/1ae7spf/what_is_pkm/?tl=it). You can use it to take notes or save read-it-later content.
 
+<p align="center">
+  <img src="assets/screenshot.png" width="1000" align="center"/>
+</p>
+
 ## Install
 
 - [Install go](https://go.dev/doc/install)
